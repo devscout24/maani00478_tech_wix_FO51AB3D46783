@@ -1,4 +1,4 @@
-import BannerOne from "./images/Rectangle 14.png";
+import BannerOne from "./images/5ddf0e72cdce0348d1fe9ef0089661f4adb9c140.png";
 import BannerTwo from "./images/6fb1d2b34a33749eec583ba0d56d3fea779a00c4.jpg";
 import BannerThree from "./images/9ddeeeaf803597d885bd225c8d267f73686a8b28.png";
 import BannerFour from "./images/38a85b88db3452e85380d89991977caf5b455a64.png";

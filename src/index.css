@@ -246,7 +246,7 @@
   }
 
   .section-container {
-    @apply max-w-[1440px] mx-auto;
+    @apply max-w-[375px] mx-auto bg-white;
   }
 }
 

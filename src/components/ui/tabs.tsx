@@ -10,7 +10,7 @@ function cn(...classes: (string | undefined | null | boolean)[]): string {
 const rippleVariants = cva("absolute rounded-full size-5 pointer-events-none", {
   variants: {
     variant: {
-      default: "bg-primary",
+      default: "bg-foreground",
       primary: "bg-primary",
     },
   },
@@ -46,7 +46,7 @@ export function TabsList({
     <TabsPrimitive.List
       data-slot="tabs-list"
       className={cn(
-        "inline-flex items-center justify-start border-b border-gray-200 bg-transparent",
+        "inline-flex items-center justify-start bg-accent rounded-2xl p-1",
         className
       )}
       {...props}
@@ -100,8 +100,8 @@ export function TabsTrigger({
       ref={triggerRef}
       data-slot="tabs-trigger"
       className={cn(
-        "relative overflow-hidden inline-flex items-center justify-center px-6 py-3 text-xl font-medium text-muted-foreground transition-colors hover:text-primary focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 data-[state=active]:text-primary",
-        "after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:bg-primary after:transition-opacity after:opacity-0 data-[state=active]:after:opacity-100 w-full cursor-pointer",
+        "relative overflow-hidden inline-flex items-center justify-center px-8 py-2 text-xl font-medium text-muted-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+        "after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:transition-opacity after:opacity-0 data-[state=active]:after:opacity-100 data-[state=active]:bg-white data-[state=active]:rounded-xl w-full cursor-pointer",
         className
       )}
       onClick={handleClick}
@@ -112,9 +112,9 @@ export function TabsTrigger({
         <motion.span
           key={ripple.id}
           initial={{ scale: 0, opacity: 0.5 }}
-          animate={{ scale: 30, opacity: 0 }}
+          animate={{ scale: 10, opacity: 0 }}
           transition={{ duration: 0.6, ease: "easeOut" }}
-          className={cn(rippleVariants({ variant: "primary" }))}
+          className={cn(rippleVariants({ variant: "default" }))}
           style={{
             top: ripple.y - 10,
             left: ripple.x - 10,

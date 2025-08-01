@@ -2,27 +2,36 @@ import { createBrowserRouter } from "react-router";
 import Layouts from "@/layouts";
 import NotFoundPage from "@/pages/NotFoundPage";
 import HomePage from "@/pages/Home";
-import App from "@/App";
 import AuthPage from "@/pages/Auth";
+import LoginSignupFrom from "@/pages/Auth/LoginSignupFrom";
+import ProtectedRoute from "./ProtectedRoute";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layouts />,
+    element: (
+      <ProtectedRoute>
+        <Layouts />
+      </ProtectedRoute>
+    ),
     errorElement: <NotFoundPage />,
     children: [
       {
         index: true,
-        element: <App />,
+        element: (
+          <ProtectedRoute>
+            <HomePage />
+          </ProtectedRoute>
+        ),
       },
-      {
-        path: "/home",
-        element: <HomePage />,
-      },
-      {
-        path: "/auth",
-        element: <AuthPage />,
-      },
+    ],
+  },
+  {
+    path: "/auth",
+    children: [
+      { index: true, element: <AuthPage /> },
+      { path: "/auth/login", element: <LoginSignupFrom /> },
+      { path: "/auth/signup", element: <LoginSignupFrom /> },
     ],
   },
 ]);

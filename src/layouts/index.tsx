@@ -1,3 +1,9 @@
+import { Outlet } from "react-router";
+
 export default function Layouts() {
-  return <section></section>;
+  return (
+    <main className="section-container">
+      <Outlet />
+    </main>
+  );
 }

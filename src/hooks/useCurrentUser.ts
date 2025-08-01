@@ -21,15 +21,18 @@
 // }
 
 export default function useCurrentUser() {
-    try {
-        const storedData = localStorage.getItem('persist:userInfo');
+  try {
+    const storedData = localStorage.getItem("persist:userInfo");
 
-        if (!storedData) return null;
+    if (!storedData) return null;
 
-        const parsedData = JSON.parse(storedData);
-        return parsedData;
-    } catch (error) {
-        console.error('Failed to decode JWT:', error);
-        return null;
-    }
+    const parsedData = JSON.parse(storedData);
+
+    if (parsedData.token === "null") return null;
+
+    return parsedData;
+  } catch (error) {
+    console.error("Failed to decode JWT:", error);
+    return null;
+  }
 }
