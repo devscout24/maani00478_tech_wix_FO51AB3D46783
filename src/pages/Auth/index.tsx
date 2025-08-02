@@ -14,7 +14,7 @@ export default function AuthPage() {
         className="w-full h-[28rem] object-cover"
       />
       <div className="w-full p-4 bg-white rounded-t-2xl absolute top-[25rem]">
-        <Logo className="w-[14.5rem] h-[3.5rem] mx-auto" />
+        <Logo className="w-[14.5rem] h-[3.5rem] mx-auto text-primary" />
         <h2 className="text-2xl font-bold mt-6 mb-4">
           Last Minutes Travel <br /> Solutions
         </h2>
