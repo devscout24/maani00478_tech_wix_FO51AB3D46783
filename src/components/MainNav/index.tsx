@@ -23,9 +23,11 @@ import SecurityCheckIcon from "@/assets/icons/security-check-solid-standard 1.sv
 import CustomerIcon from "@/assets/icons/customer-service-01-solid-standard 1.svg?react";
 import LogoutIcon from "@/assets/icons/logout-03-solid-standard 1.svg?react";
 import { Button } from "../ui/button";
+import { useNavigate } from "react-router";
 
 export default function MainNav() {
   const [open, setOpen] = useState<boolean>(false);
+  const navigate = useNavigate();
 
   const navList = [
     {
@@ -34,62 +36,62 @@ export default function MainNav() {
       icon: <UserIcon />,
     },
     {
-      path: "/",
+      path: "/data-optimization",
       title: "Data Optimizations",
       icon: <AnalyticsIcon />,
     },
     {
-      path: "/",
+      path: "/dealing-records",
       title: "Dealing Records",
       icon: <MoneyExchangeIcon />,
     },
     {
-      path: "/",
+      path: "/deposit",
       title: "Deposit",
       icon: <MoneySendIcon />,
     },
     {
-      path: "/",
+      path: "/withdrawal",
       title: "Withdrawal",
       icon: <MoneySendIcon />,
     },
     {
-      path: "/",
+      path: "/wallet-info",
       title: "Wallet Info",
       icon: <WalletIcon />,
     },
     {
-      path: "/",
+      path: "/about-us",
       title: "About Us",
       icon: <InformationIcon />,
     },
     {
-      path: "/",
+      path: "/term-and-conditions",
       title: "Term and Conditions",
       icon: <NoteIcon />,
     },
     {
-      path: "/",
+      path: "/agent-mode",
       title: "Agent Mode",
       icon: <UserGroupIcon />,
     },
     {
-      path: "/",
+      path: "/faqs",
       title: "FAQs",
       icon: <HelpIcon />,
     },
     {
-      path: "/",
+      path: "/security",
       title: "Security",
       icon: <SecurityCheckIcon />,
     },
     {
-      path: "/",
+      path: "/customer-service",
       title: "Customer Service",
       icon: <CustomerIcon />,
     },
     {
-      path: "/",
+      path: "/auth",
       title: "Logout Account",
       icon: <LogoutIcon />,
     },
@@ -117,6 +119,7 @@ export default function MainNav() {
                 key={item.title}
                 variant="ghost"
                 className="w-full hover:bg-accent text-right"
+                onClick={() => navigate(item.path)}
               >
                 <div className="w-full flex items-center gap-2 py-10">
                   {item.icon} {item.title}

@@ -249,32 +249,3 @@
     @apply max-w-[375px] mx-auto bg-white;
   }
 }
-
-/* span.ripple {
-  position: absolute;
-  border-radius: 50%;
-  transform: scale(0);
-  animation: ripple 600ms linear;
-  background-color: rgba(141, 141, 141, 0.4);
-  pointer-events: none;
-  z-index: 0;
-}
-
-@keyframes ripple {
-  to {
-    transform: scale(4);
-    opacity: 0;
-  }
-} */
-
-@layer components {
-  .sidebar {
-    background: url("./assets/images/Dashboard.svg");
-    background-repeat: no-repeat, repeat;
-  }
-
-  .sidebar-dark {
-    background: url("./assets/images/Dashboard-dark.svg");
-    background-repeat: no-repeat, repeat;
-  }
-}
