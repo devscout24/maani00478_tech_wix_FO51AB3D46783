@@ -15,7 +15,6 @@ import { toast } from "sonner";
 import { useNavigate } from "react-router";
 import { useAppDispatch } from "@/redux/hooks";
 import { storeUserInfo } from "@/redux/slices/authSlice";
-import { ScrollArea } from "@/components/ui/scroll-area";
 
 const formSchema = z.object({
   username: z.string().min(2).max(50),
@@ -51,102 +50,97 @@ export default function Signup() {
 
   return (
     <section>
-      <ScrollArea className="h-[34rem]">
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-            <FormField
-              control={form.control}
-              name="username"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>User Name</FormLabel>
-                  <FormControl>
-                    <Input
-                      placeholder="Please enter your user name"
-                      {...field}
-                    />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <FormField
+            control={form.control}
+            name="username"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>User Name</FormLabel>
+                <FormControl>
+                  <Input placeholder="Please enter your user name" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-            <FormField
-              control={form.control}
-              name="phone"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Phone Number</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Enter your phone number" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+          <FormField
+            control={form.control}
+            name="phone"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Phone Number</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter your phone number" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-            <FormField
-              control={form.control}
-              name="loginPassword"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Login Password</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Enter login password" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+          <FormField
+            control={form.control}
+            name="loginPassword"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Login Password</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter login password" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-            <FormField
-              control={form.control}
-              name="withdrawPassword"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Withdraw Password</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Enter withdraw password" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+          <FormField
+            control={form.control}
+            name="withdrawPassword"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Withdraw Password</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter withdraw password" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-            <FormField
-              control={form.control}
-              name="invitationCode"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Invitation Code</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Enter invitation code" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+          <FormField
+            control={form.control}
+            name="invitationCode"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Invitation Code</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter invitation code" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input placeholder="Enter email" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+          <FormField
+            control={form.control}
+            name="email"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Email</FormLabel>
+                <FormControl>
+                  <Input placeholder="Enter email" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
 
-            <Button className="w-full" type="submit">
-              REGISTER NOW
-            </Button>
-          </form>
-        </Form>
-      </ScrollArea>
+          <Button className="w-full" type="submit">
+            REGISTER NOW
+          </Button>
+        </form>
+      </Form>
     </section>
   );
 }

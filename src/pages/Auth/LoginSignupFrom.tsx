@@ -12,7 +12,7 @@ export default function LoginSignupFrom() {
   return (
     <section className="section-container h-screen p-4">
       <ArrowLeftIcon className="size-8" onClick={() => navigate("/auth")} />
-      <Logo className="w-[14.5rem] h-[3.5rem] my-6" />
+      <Logo className="w-[14.5rem] h-[3.5rem] my-6 text-primary" />
       <h3 className="text-xl font-bold">Get Started now</h3>
       <p>Create an account or log in to explore about our app</p>
 

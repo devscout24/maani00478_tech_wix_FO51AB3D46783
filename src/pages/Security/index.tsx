@@ -14,7 +14,7 @@ export default function Security() {
       <div className="flex items-center">
         <ArrowLeftIcon className="size-8" onClick={() => navigate("/")} />
         <h4 className="w-full text-[.8rem] font-semibold text-center">
-          Add Wallet
+          Security Center
         </h4>
       </div>
 

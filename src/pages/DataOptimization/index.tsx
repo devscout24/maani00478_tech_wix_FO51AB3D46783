@@ -3,6 +3,7 @@ import ArrowLeftIcon from "@/assets/icons/arrow-left-02-solid-rounded 1.svg?reac
 import TaskOneIcon from "@/assets/icons/task-01-solid-standard 1.svg?react";
 import TaskTwoIcon from "@/assets/icons/task-done-01-solid-standard 1.svg?react";
 import StarIcon from "@/assets/icons/star-solid-standard 1.svg?react";
+import FrameIcon from "@/assets/svgs/Frame.svg?react";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -119,7 +120,10 @@ export default function DataOptimization() {
     description,
     price,
   }: TTravelCard) => (
-    <Card className="p-0 border-0 overflow-hidden shadow-xl">
+    <Card className="p-0 border-0 overflow-hidden shadow-xl relative">
+      <div className="absolute right-6 p-2 rounded-b-xl bg-white/50 ">
+        <FrameIcon className="size-10" />
+      </div>
       <img src={assets.image.BannerTwo} alt="banner" className="w-full" />
       <CardContent className="pb-4 space-y-1">
         <p className="text-accent-foreground">{title}</p>
@@ -182,7 +186,7 @@ export default function DataOptimization() {
 
         <div className="p-4 w-full flex items-center gap-4">
           <div className="flex-1 bg-white p-4 rounded-2xl space-y-2">
-            <div className="w-fit p-4 rounded-full bg-primary/35 text-primary">
+            <div className="w-fit p-4 rounded-full bg-primary/10 text-primary">
               <TaskOneIcon className="size-6" />
             </div>
             <p>Total Journey</p>
@@ -190,7 +194,7 @@ export default function DataOptimization() {
           </div>
 
           <div className="flex-1 bg-white p-4 rounded-2xl space-y-2">
-            <div className="w-fit p-4 rounded-full bg-primary/35 text-primary">
+            <div className="w-fit p-4 rounded-full bg-primary/10 text-primary">
               <TaskTwoIcon className="size-6" />
             </div>
             <p>Visited Journey</p>

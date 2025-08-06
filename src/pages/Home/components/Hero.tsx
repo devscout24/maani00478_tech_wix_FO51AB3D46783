@@ -39,7 +39,10 @@ export function Hero() {
             <p>Normal Traveler</p>
           </div>
 
-          <div>
+          <div className="relative">
+            <div className="w-fit text-xs text-green-600 border border-green-600 p-1 rounded-full absolute right-0">
+              Current
+            </div>
             <BadgeIcon2 className="size-12" />
             <p>Senior Traveler</p>
           </div>

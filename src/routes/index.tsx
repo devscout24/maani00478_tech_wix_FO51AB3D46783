@@ -13,6 +13,11 @@ import FundsHistory from "@/pages/FundsHistory";
 import Withdrawal from "@/pages/Withdrawal";
 import WalletInfo from "@/pages/WalletInfo";
 import Security from "@/pages/Security";
+import CustomerService from "@/pages/CustomerService";
+import TermAndConditions from "@/pages/TermAndConditions";
+import AgentMode from "@/pages/AgentMode";
+import FAQs from "@/pages/FAQs";
+import AboutUs from "@/pages/AboutUs";
 
 const router = createBrowserRouter([
   {
@@ -63,6 +68,26 @@ const router = createBrowserRouter([
       {
         path: "/security",
         element: <Security />,
+      },
+      {
+        path: "/customer-service",
+        element: <CustomerService />,
+      },
+      {
+        path: "/term-and-conditions",
+        element: <TermAndConditions />,
+      },
+      {
+        path: "/agent-mode",
+        element: <AgentMode />,
+      },
+      {
+        path: "/faqs",
+        element: <FAQs />,
+      },
+      {
+        path: "/about-us",
+        element: <AboutUs />,
       },
     ],
   },
