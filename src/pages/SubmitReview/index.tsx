@@ -20,7 +20,7 @@ export default function SubmitReview() {
 
   return (
     <section>
-      <div className="h-[26.5rem] bg-[url('/6325f1608554d61735ca3a8c60436e4b5f7424f1(1).png')] bg-cover bg-center flex flex-col">
+      <div className="h-[26.5rem] bg-[url('/6325f1608554d61735ca3a8c60436e4b5f7424f11.png')] bg-cover bg-center flex flex-col">
         <div className="p-4 text-white">
           <ArrowLeftIcon
             className="size-8"
