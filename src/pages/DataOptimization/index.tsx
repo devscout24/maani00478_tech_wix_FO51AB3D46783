@@ -146,7 +146,7 @@ export default function DataOptimization() {
 
   return (
     <section>
-      <div className="bg-[url(src/assets/images/5ddf0e72cdce0348d1fe9ef0089661f4adb9c140.png)]">
+      <div className="bg-[url('/5ddf0e72cdce0348d1fe9ef0089661f4adb9c140.png')]">
         <div className="p-4">
           <div className="flex items-center text-white">
             <ArrowLeftIcon className="size-8" onClick={() => navigate("/")} />
@@ -199,7 +199,9 @@ export default function DataOptimization() {
         </div>
 
         <div className="p-4">
-          <Button className="w-full">Reserve Journey</Button>
+          <Button className="w-full" onClick={() => navigate("/submit-review")}>
+            Reserve Journey
+          </Button>
         </div>
 
         <div className="w-full h-5 bg-white rounded-t-2xl" />

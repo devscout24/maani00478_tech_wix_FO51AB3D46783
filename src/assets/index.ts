@@ -12,6 +12,7 @@ import BannerTwelve from "./images/dbfb3a64c2f7dc73664d5e8685d4764efef8eabc.png"
 import BannerThirteen from "./images/f4602d461120add03151493be8d4ed74b05d1ae4.png";
 import BannerFourteen from "./images/fb1d9fe721674cd1d592772a247f17254ad5a492.png";
 import BannerFifteen from "./images/Frame 2087328367.png";
+import BannerSixteen from "./images/6325f1608554d61735ca3a8c60436e4b5f7424f1 (1).png";
 
 const assets = {
   image: {
@@ -29,6 +30,7 @@ const assets = {
     BannerThirteen,
     BannerFourteen,
     BannerFifteen,
+    BannerSixteen,
   },
 };
 

@@ -7,7 +7,7 @@ export default function AuthPage() {
   const navigate = useNavigate();
 
   return (
-    <section className="section-container relative min-h-screen">
+    <section className="section-container relative">
       <img
         src={assets.image.BannerOne}
         alt="banner image"

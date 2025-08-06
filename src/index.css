@@ -246,6 +246,6 @@
   }
 
   .section-container {
-    @apply max-w-[375px] mx-auto bg-white;
+    @apply max-w-[375px] min-h-screen mx-auto bg-white;
   }
 }

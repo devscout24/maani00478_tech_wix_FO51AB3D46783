@@ -38,7 +38,7 @@ export function Travel() {
         {mockTours.map((item) => (
           <div
             key={item.id}
-            className="space-y-[4.75rem] bg-[url(src/assets/images/c0b798a738816956c0e4fb3cc2bdda58d52f7102.png)] bg-no-repeat bg-center bg-origin-border"
+            className="space-y-[4.75rem] bg-[url(/c0b798a738816956c0e4fb3cc2bdda58d52f7102.png)] bg-no-repeat bg-center bg-origin-border"
           >
             <h2 className="text-2xl text-white font-semibold p-2">
               {item.city}

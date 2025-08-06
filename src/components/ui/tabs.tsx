@@ -100,7 +100,7 @@ export function TabsTrigger({
       ref={triggerRef}
       data-slot="tabs-trigger"
       className={cn(
-        "relative overflow-hidden inline-flex items-center justify-center px-8 py-2 text-xl font-medium text-muted-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
+        "relative overflow-hidden inline-flex items-center justify-center px-8 py-2 font-medium text-muted-foreground transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50",
         "after:absolute after:bottom-0 after:left-0 after:right-0 after:h-0.5 after:transition-opacity after:opacity-0 data-[state=active]:after:opacity-100 data-[state=active]:bg-white data-[state=active]:rounded-xl w-full cursor-pointer",
         className
       )}
