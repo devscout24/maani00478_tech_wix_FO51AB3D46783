@@ -32,7 +32,7 @@ export function Sustainable() {
   ];
 
   return (
-    <section className="p-4">
+    <section className="p-4 pb-10">
       <h2 className="text-2xl font-semibold mb-4">SUSTAINABLE Tourism</h2>
 
       <div className="space-y-4">

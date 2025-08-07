@@ -1,6 +1,6 @@
 import assets from "@/assets";
 import MainNav from "@/components/MainNav";
-import { About, App, Footer, Hero, Sustainable, Travel } from "./components";
+import { About, App, Hero, Sustainable, Travel } from "./components";
 
 export default function HomePage() {
   return (
@@ -18,7 +18,7 @@ export default function HomePage() {
         <Travel />
         <App />
         <Sustainable />
-        <Footer />
+        {/* <Footer /> */}
       </div>
     </section>
   );

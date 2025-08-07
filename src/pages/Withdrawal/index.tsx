@@ -1,5 +1,6 @@
 import assets from "@/assets";
 import ArrowLeftIcon from "@/assets/icons/arrow-left-02-solid-rounded 1.svg?react";
+import CopyIcon from "@/assets/icons/copy-01-stroke-rounded 1.svg?react";
 import Logo from "@/assets/svgs/logo.svg?react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -35,10 +36,23 @@ export default function Withdrawal() {
         </div>
       </div>
 
-      {/* <div className="space-y-2 mt-8">
+      <div className="space-y-2 mt-8">
         <h4 className="font-semibold">Withdrawal Method</h4>
-        <div></div>
-      </div> */}
+        <div className="bg-accent px-6 py-4 rounded-xl">
+          <div className="font-semibold flex items-center justify-between text-muted-foreground">
+            {["Zara14", "USDT", "TRC20"].map((item) => (
+              <p key={item}>{item}</p>
+            ))}
+          </div>
+
+          <div className="flex items-center gap-2 mt-2">
+            <Input className="bg-white" />
+            <Button size="icon" variant="ghost" className="p-0">
+              <CopyIcon className="text-muted-foreground size-6" />
+            </Button>
+          </div>
+        </div>
+      </div>
 
       <div className="space-y-2 mt-8">
         <Label className="font-semibold">Withdrawal Amount</Label>
