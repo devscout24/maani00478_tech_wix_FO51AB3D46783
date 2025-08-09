@@ -11,7 +11,7 @@ export default function HomePage() {
         <About />
         <div className="p-4">
           <h2 className="text-xl font-semibold mb-4 text-center">
-            Did you know that Europamundo has tours in other languages?
+            Did you know that lastminute has tours in other languages?
           </h2>
           <img src={assets.image.BannerThirteen} alt="banner" />
         </div>
