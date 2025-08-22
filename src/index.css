@@ -249,3 +249,22 @@
     @apply max-w-[375px] min-h-screen mx-auto bg-white;
   }
 }
+
+.loader {
+  width: 50px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: oklch(0.6214 0.251289 1.2036);
+  -webkit-mask: radial-gradient(
+    circle closest-side at 50% 40%,
+    #0000 94%,
+    #000
+  );
+  transform-origin: 50% 40%;
+  animation: l25 1s infinite linear;
+}
+@keyframes l25 {
+  100% {
+    transform: rotate(1turn);
+  }
+}

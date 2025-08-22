@@ -12,15 +12,44 @@ import {
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
+import { useReserveJourneyPackageQuery } from "@/redux/api/endpoints/package.api";
+
+type TPackage = {
+  id: number;
+  title: string;
+  slug: string;
+  description: string;
+  image: string;
+  duration: number;
+  name: string;
+  status: "active" | "inactive" | "pending";
+  price: number;
+  created_at: string;
+  updated_at: string;
+};
 
 export default function SubmitReview() {
   const navigate = useNavigate();
   const [open, setOpen] = useState<boolean>(false);
   const [review, setReview] = useState<string | null>(null);
 
+  const { data, isLoading } = useReserveJourneyPackageQuery({});
+  const packageData: TPackage = data?.data;
+
+  if (isLoading) {
+    return (
+      <div className="h-screen w-full flex justify-center items-center">
+        <div className="loader"></div>
+      </div>
+    );
+  }
+  console.log("data", packageData);
+
   return (
     <section>
-      <div className="h-[26.5rem] bg-[url('/6325f1608554d61735ca3a8c60436e4b5f7424f11.png')] bg-cover bg-center flex flex-col">
+      <div
+        className={`h-[26.5rem] bg-[url('${packageData?.image}')] bg-cover bg-center flex flex-col`}
+      >
         <div className="p-4 text-white">
           <ArrowLeftIcon
             className="size-8"

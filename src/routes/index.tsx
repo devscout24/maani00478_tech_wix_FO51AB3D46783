@@ -4,7 +4,7 @@ import NotFoundPage from "@/pages/NotFoundPage";
 import HomePage from "@/pages/Home";
 import AuthPage from "@/pages/Auth";
 import LoginSignupFrom from "@/pages/Auth/LoginSignupFrom";
-// import ProtectedRoute from "./ProtectedRoute";
+import ProtectedRoute from "./ProtectedRoute";
 import DataOptimization from "@/pages/DataOptimization";
 import SubmitReview from "@/pages/SubmitReview";
 import DealingRecord from "@/pages/DealingRecord";
@@ -23,19 +23,15 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: (
-      // <ProtectedRoute>
-      <Layouts />
-      // </ProtectedRoute>
+      <ProtectedRoute>
+        <Layouts />
+      </ProtectedRoute>
     ),
     errorElement: <NotFoundPage />,
     children: [
       {
         index: true,
-        element: (
-          // <ProtectedRoute>
-          <HomePage />
-          // </ProtectedRoute>
-        ),
+        element: <HomePage />,
       },
       {
         path: "/data-optimization",

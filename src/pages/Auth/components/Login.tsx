@@ -18,9 +18,10 @@ import { toast } from "sonner";
 import { useNavigate } from "react-router";
 import { useAppDispatch } from "@/redux/hooks";
 import { storeUserInfo } from "@/redux/slices/authSlice";
+import { useMemberLoginMutation } from "@/redux/api/endpoints/auth.api";
 
 const formSchema = z.object({
-  username: z.string().min(2).max(50),
+  email: z.string().min(2).max(50),
   password: z.string().min(8),
 });
 
@@ -29,19 +30,27 @@ export default function Login() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
+  const [memberLogin, { isLoading, isSuccess }] = useMemberLoginMutation();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      username: "",
+      email: "",
       password: "",
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
-    dispatch(storeUserInfo("user-login-token"));
-    toast.success("Login successful.");
-    navigate("/");
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      const user = await memberLogin(values).unwrap();
+      console.log(user);
+      dispatch(storeUserInfo(user.data.token));
+      toast.success(user.message);
+      navigate("/");
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    } catch (error: any) {
+      toast.success("Login Failed.", error.message);
+    }
   }
 
   return (
@@ -50,12 +59,12 @@ export default function Login() {
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
             control={form.control}
-            name="username"
+            name="email"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>User Name</FormLabel>
+                <FormLabel>Email</FormLabel>
                 <FormControl>
-                  <Input placeholder="Please enter your user name" {...field} />
+                  <Input placeholder="Please enter your email" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -88,7 +97,11 @@ export default function Login() {
             )}
           />
 
-          <Button className="w-full" type="submit">
+          <Button
+            className="w-full"
+            type="submit"
+            disabled={isLoading || isSuccess}
+          >
             LOG IN
           </Button>
         </form>

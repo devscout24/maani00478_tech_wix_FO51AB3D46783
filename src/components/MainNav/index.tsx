@@ -24,10 +24,16 @@ import CustomerIcon from "@/assets/icons/customer-service-01-solid-standard 1.sv
 import LogoutIcon from "@/assets/icons/logout-03-solid-standard 1.svg?react";
 import { Button } from "../ui/button";
 import { useNavigate } from "react-router";
+import { useAppDispatch } from "@/redux/hooks";
+import { removeUserInfo } from "@/redux/slices/authSlice";
+// import { useMemberLogoutQuery } from "@/redux/api/endpoints/auth.api";
 
 export default function MainNav() {
   const [open, setOpen] = useState<boolean>(false);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  // const { isLoading } = useMemberLogoutQuery({});
 
   const navList = [
     {
@@ -90,12 +96,12 @@ export default function MainNav() {
       title: "Customer Service",
       icon: <CustomerIcon />,
     },
-    {
-      path: "/auth",
-      title: "Logout Account",
-      icon: <LogoutIcon />,
-    },
   ];
+
+  const handelLogout = () => {
+    dispatch(removeUserInfo());
+    navigate("/auth");
+  };
 
   return (
     <nav className="w-full bg-primary flex items-center justify-between p-4 text-white">
@@ -126,6 +132,15 @@ export default function MainNav() {
                 </div>
               </Button>
             ))}
+            <Button
+              variant="ghost"
+              className="w-full hover:bg-accent text-right"
+              onClick={handelLogout}
+            >
+              <div className="w-full flex items-center gap-2 py-10">
+                <LogoutIcon /> Logout Account
+              </div>
+            </Button>
           </SheetDescription>
         </SheetContent>
       </Sheet>
