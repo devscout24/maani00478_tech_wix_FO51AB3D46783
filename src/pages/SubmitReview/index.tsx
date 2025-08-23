@@ -13,19 +13,15 @@ import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { useReserveJourneyPackageQuery } from "@/redux/api/endpoints/package.api";
+import assets from "@/assets";
 
 type TPackage = {
   id: number;
   title: string;
-  slug: string;
-  description: string;
   image: string;
-  duration: number;
-  name: string;
-  status: "active" | "inactive" | "pending";
   price: number;
-  created_at: string;
-  updated_at: string;
+  commission: number;
+  duration: number;
 };
 
 export default function SubmitReview() {
@@ -33,23 +29,40 @@ export default function SubmitReview() {
   const [open, setOpen] = useState<boolean>(false);
   const [review, setReview] = useState<string | null>(null);
 
-  const { data, isLoading } = useReserveJourneyPackageQuery({});
+  const { data, error, isLoading, isFetching, isError } =
+    useReserveJourneyPackageQuery({});
   const packageData: TPackage = data?.data;
+  const packageError =
+    error && "data" in error ? (error.data as { message: string }) : undefined;
 
-  if (isLoading) {
+  if (isLoading || isFetching) {
     return (
       <div className="h-screen w-full flex justify-center items-center">
         <div className="loader"></div>
       </div>
     );
   }
-  console.log("data", packageData);
+
+  if (isError) {
+    return (
+      <div className="h-screen w-full flex flex-col justify-center items-center">
+        <img src={assets.image.Oops} alt="Oops" className="w-28" />
+        <p className="font-semibold">{packageError?.message}</p>
+        <Button className="mt-4" onClick={() => window.history.back()}>
+          Back to Previous
+        </Button>
+      </div>
+    );
+  }
+
+  console.log("packageData", packageData);
 
   return (
     <section>
       <div
-        className={`h-[26.5rem] bg-[url('${packageData?.image}')] bg-cover bg-center flex flex-col`}
+        className={`h-[26.5rem] bg-[url('/6325f1608554d61735ca3a8c60436e4b5f7424f11.png')] bg-cover bg-center flex flex-col`}
       >
+        {/* <img src={packageData?.image} alt="banner" /> */}
         <div className="p-4 text-white">
           <ArrowLeftIcon
             className="size-8"
@@ -61,23 +74,23 @@ export default function SubmitReview() {
 
       <div className="p-4">
         <p className="w-fit ml-auto text-primary font-semibold -mt-6">
-          USDC 6990.00
+          USDC {packageData?.price}
         </p>
 
-        <h4 className="text-xl font-semibold mt-6">Hanoi Tour Package</h4>
+        <h4 className="text-xl font-semibold">{packageData?.title}</h4>
       </div>
 
       <div className="flex items-center gap-4 p-4">
         <div className="w-full bg-muted p-4 rounded-xl space-y-2">
           <MoneyIcon className="size-6 text-primary" />
           <p className="text-xs text-muted-foreground">Total Price</p>
-          <p className="font-semibold">USDC 6990.00</p>
+          <p className="font-semibold">USDC {packageData?.price}</p>
         </div>
 
         <div className="w-full bg-muted p-4 rounded-xl space-y-2">
           <SaveMoneyIcon className="size-6 text-primary" />
           <p className="text-xs text-muted-foreground">Commissions</p>
-          <p className="font-semibold">USDC 6990.00</p>
+          <p className="font-semibold">USDC {packageData?.commission}</p>
         </div>
       </div>
 

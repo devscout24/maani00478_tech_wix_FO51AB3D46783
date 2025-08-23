@@ -10,14 +10,24 @@ export type TJwtPayload = {
 };
 
 export type TCurrentLoginUser = {
-  id: string;
-  role: TUserRole;
-  email: string;
-  avatar: string;
-  firstName: string;
-  lastName: string;
+  iss: string;
   iat: number;
   exp: number;
+  nbf: number;
+  jti: string;
+  sub: string;
+  prv: string;
+  id: number;
+  username: string;
+  name: string;
+  email: string;
+  roles: string;
+  level_id: number | null;
+  balance: string;
+  commission: string;
+  deals_completed: number;
+  journeys: number;
+  invitation_code: string | null;
 };
 
 export type TChangePassword = {
@@ -26,19 +36,17 @@ export type TChangePassword = {
   confirmPassword: string;
 };
 
-export type TUser = {
-  id: string;
-  avatar: string;
-  createdAt: string;
-  updatedAt: string;
-  designation: string;
+export type TUserInfo = {
+  id: number;
+  username: string;
+  name: string;
   email: string;
-  firstName: string;
-  lastName: string;
-  userName: string;
-  phoneNumber: string;
-  role: TUserRole;
-  userStatus: "Active" | "Deactivate";
-  isDeleted: boolean;
-  isPasswordChanged: boolean;
+  roles: string;
+  level_id: number | null;
+  balance: string;
+  commission: string;
+  deals_completed: number;
+  journeys: number;
+  invitation_code: string | null;
+  targetDealCompletionPercentage: number;
 };

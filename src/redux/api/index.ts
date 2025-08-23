@@ -8,13 +8,14 @@ export const baseApi = createApi({
     prepareHeaders: (headers) => {
       const storedData = localStorage.getItem("persist:userInfo");
       const accessToken = JSON.parse(storedData!).token;
-      console.log("accessToken", accessToken);
+      // console.log("accessToken", accessToken);
 
-      if (accessToken) headers.set("authorization", `Bearer ${accessToken}`);
+      if (accessToken)
+        headers.set("authorization", `Bearer ${JSON.parse(accessToken)}`);
 
       return headers;
     },
   }),
   endpoints: () => ({}),
-  tagTypes: ["auth", "wallet", "withdrawal", "order", "packages"],
+  tagTypes: ["auth", "wallet", "withdrawal", "order", "packages", "deposits"],
 });

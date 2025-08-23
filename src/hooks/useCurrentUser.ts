@@ -7,32 +7,13 @@ export default function useCurrentUser(): TCurrentLoginUser | null {
 
     if (!storedData) return null;
 
-    const parsedData = JSON.parse(storedData);
+    const parsedData = JSON.parse(storedData)?.token;
 
-    const loginToken = parsedData?.token;
+    if (!parsedData || typeof parsedData !== "string") return null;
 
-    if (!loginToken || typeof loginToken !== "string") return null;
-
-    return jwtDecode<TCurrentLoginUser>(loginToken);
+    return jwtDecode<TCurrentLoginUser>(parsedData);
   } catch (error) {
     console.error("Failed to decode JWT:", error);
     return null;
   }
 }
-
-// export default function useCurrentUser() {
-//   try {
-//     const storedData = localStorage.getItem("persist:userInfo");
-
-//     if (!storedData) return null;
-
-//     const parsedData = JSON.parse(storedData);
-
-//     if (parsedData.token === "null") return null;
-
-//     return parsedData;
-//   } catch (error) {
-//     console.error("Failed to decode JWT:", error);
-//     return null;
-//   }
-// }

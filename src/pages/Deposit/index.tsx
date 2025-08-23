@@ -5,12 +5,37 @@ import Logo from "@/assets/svgs/logo.svg?react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+// import { useDepositsRequestMutation } from "@/redux/api/endpoints/deposits.api";
+// import { toast } from "sonner";
 import { useState } from "react";
 import { useNavigate } from "react-router";
 
 export default function Deposit() {
   const navigate = useNavigate();
   const [amount, setAmount] = useState<number>(0);
+
+  // const [depositsRequest] = useDepositsRequestMutation();
+
+  const handleDeposit = async () => {
+    navigate("/customer-service");
+    // try {
+    //   const res = await depositsRequest({ amount }).unwrap();
+    //   console.log("res", res);
+    //   toast.success("Deposit successful.");
+    // } catch (error) {
+    //   console.log(error);
+    //   const errMsg =
+    //     typeof error === "object" &&
+    //     error !== null &&
+    //     "data" in error &&
+    //     // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    //     typeof (error as any).data?.message === "string"
+    //       ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    //         (error as any).data.message
+    //       : "Deposit failed.";
+    //   toast.error(errMsg);
+    // }
+  };
 
   return (
     <section className="p-4 space-y-4">
@@ -45,6 +70,7 @@ export default function Deposit() {
         <Input
           placeholder="USDC 0.00"
           defaultValue={amount !== 0 ? amount : undefined}
+          onChange={(e) => setAmount(Number(e.target.value))}
         />
       </div>
 
@@ -64,7 +90,9 @@ export default function Deposit() {
       </div>
 
       <div>
-        <Button className="w-full">Add Funds</Button>
+        <Button className="w-full" onClick={handleDeposit}>
+          Add Funds
+        </Button>
       </div>
     </section>
   );

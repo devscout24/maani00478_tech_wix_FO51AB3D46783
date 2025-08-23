@@ -22,9 +22,18 @@ export const authApi = baseApi.injectEndpoints({
       invalidatesTags: ["auth"],
     }),
 
-    memberLogout: build.query({
+    memberLogout: build.mutation({
       query: () => ({
         url: "/member-logout",
+        method: "POST",
+        credentials: "include",
+      }),
+      invalidatesTags: ["auth"],
+    }),
+
+    myInfo: build.query({
+      query: () => ({
+        url: "/my-info",
         method: "GET",
         credentials: "include",
       }),
@@ -36,5 +45,6 @@ export const authApi = baseApi.injectEndpoints({
 export const {
   useMemberLoginMutation,
   useMemberRegisterMutation,
-  useMemberLogoutQuery,
+  useMemberLogoutMutation,
+  useMyInfoQuery,
 } = authApi;

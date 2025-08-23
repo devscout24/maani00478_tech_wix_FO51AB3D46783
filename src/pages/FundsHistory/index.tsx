@@ -2,101 +2,51 @@ import { useNavigate } from "react-router";
 import ArrowLeftIcon from "@/assets/icons/arrow-left-02-solid-rounded 1.svg?react";
 import CreditIcon from "@/assets/icons/credit-card-solid-rounded 1.svg?react";
 import { Badge } from "@/components/ui/badge";
+import { useDepositsRecordsQuery } from "@/redux/api/endpoints/deposits.api";
+import assets from "@/assets";
+import { Button } from "@/components/ui/button";
+
+type TTransaction = {
+  id: number;
+  username: string;
+  status: string;
+  amount: number;
+  created_at: string;
+};
 
 export default function FundsHistory() {
   const navigate = useNavigate();
-  const allTransactions = [
-    {
-      id: 1,
-      username: "Zara14",
-      status: "Successful",
-      date: "Mar 30",
-      time: "20:00",
-      currency: "USDC",
-      amount: 4324.41,
-    },
-    {
-      id: 2,
-      username: "Zara14",
-      status: "Pending",
-      date: "Apr 01",
-      time: "18:30",
-      currency: "USDC",
-      amount: 1250.0,
-    },
-    {
-      id: 3,
-      username: "Zara14",
-      status: "Failed",
-      date: "Apr 02",
-      time: "19:15",
-      currency: "USDC",
-      amount: 0.0,
-    },
-    {
-      id: 4,
-      username: "Zara14",
-      status: "Successful",
-      date: "Apr 03",
-      time: "17:45",
-      currency: "USDC",
-      amount: 3750.8,
-    },
-    {
-      id: 5,
-      username: "Zara14",
-      status: "Successful",
-      date: "Apr 04",
-      time: "16:10",
-      currency: "USDC",
-      amount: 5100.5,
-    },
-    {
-      id: 6,
-      username: "Zara14",
-      status: "Successful",
-      date: "Mar 28",
-      time: "14:20",
-      currency: "USDC",
-      amount: 2150.0,
-    },
-    {
-      id: 7,
-      username: "Zara14",
-      status: "Failed",
-      date: "Mar 29",
-      time: "09:45",
-      currency: "USDC",
-      amount: 0.0,
-    },
-    {
-      id: 8,
-      username: "Zara14",
-      status: "Successful",
-      date: "Apr 05",
-      time: "12:30",
-      currency: "USDC",
-      amount: 6200.75,
-    },
-    {
-      id: 9,
-      username: "Zara14",
-      status: "Pending",
-      date: "Apr 06",
-      time: "21:15",
-      currency: "USDC",
-      amount: 800.25,
-    },
-    {
-      id: 10,
-      username: "Zara14",
-      status: "Successful",
-      date: "Apr 07",
-      time: "11:50",
-      currency: "USDC",
-      amount: 4500.0,
-    },
-  ];
+
+  const {
+    data: depositsData,
+    isLoading,
+    isFetching,
+    error,
+    isError,
+  } = useDepositsRecordsQuery({});
+
+  const depositsError =
+    error && "data" in error ? (error.data as { message: string }) : undefined;
+
+  if (isLoading || isFetching) {
+    return (
+      <div className="h-screen w-full flex justify-center items-center">
+        <div className="loader"></div>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="h-screen w-full flex flex-col justify-center items-center">
+        <img src={assets.image.Oops} alt="Oops" className="w-28" />
+        <p className="font-semibold">{depositsError?.message}</p>
+        <Button className="mt-4" onClick={() => window.history.back()}>
+          Back to Previous
+        </Button>
+      </div>
+    );
+  }
 
   return (
     <section className="p-4 space-y-6">
@@ -118,7 +68,7 @@ export default function FundsHistory() {
       <div>
         <h4 className="font-semibold">All Transactions</h4>
         <div className="space-y-4 mt-2">
-          {allTransactions.map((item) => (
+          {depositsData.data.map((item: TTransaction) => (
             <div
               key={item.id}
               className="p-2.5 bg-muted flex items-center gap-4 rounded-xl"
@@ -130,16 +80,14 @@ export default function FundsHistory() {
                 <div className="space-y-2.5">
                   <h4 className="font-semibold">{item.username}</h4>
                   <p className="text-xs text-muted-foreground">
-                    <span>{item.date}</span>{" "}
-                    <span className="ml-2">{item.time}</span>
+                    {/* <span>{item.date}</span>{" "} */}
+                    <span>{item.created_at}</span>
                   </p>
                 </div>
 
                 <div className="flex flex-col space-y-2.5">
                   <Badge className="ml-auto">{item.status}</Badge>
-                  <h2 className="text-xl font-semibold">
-                    {item.currency} {item.amount}
-                  </h2>
+                  <h2 className="text-xl font-semibold">{item.amount}</h2>
                 </div>
               </div>
             </div>

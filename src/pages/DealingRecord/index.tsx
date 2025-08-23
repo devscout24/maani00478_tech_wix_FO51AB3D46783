@@ -1,14 +1,23 @@
-import assets from "@/assets";
 import ArrowLeftIcon from "@/assets/icons/arrow-left-02-solid-rounded 1.svg?react";
-import MoneyIcon from "@/assets/icons/money-03-solid-rounded 1.svg?react";
-import SaveMoneyIcon from "@/assets/icons/save-money-dollar-solid-sharp 1.svg?react";
-import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useNavigate } from "react-router";
+import DealingCard, { type TDealingCard } from "./components/DealingCard";
+import { useState } from "react";
+import { useDealRecordsQuery } from "@/redux/api/endpoints/order.api";
+import assets from "@/assets";
+import { Package2 } from "lucide-react";
 
 export default function DealingRecord() {
   const navigate = useNavigate();
+  const [dealStatus, setDealStatus] = useState<"all" | "pending" | "completed">(
+    "all"
+  );
+
+  const { data, isLoading, isFetching, isError, error } =
+    useDealRecordsQuery(dealStatus);
+  const recordData: TDealingCard[] = data?.data;
+  const recordError =
+    error && "data" in error ? (error.data as { message: string }) : undefined;
 
   return (
     <section className="p-4 space-y-8">
@@ -23,158 +32,97 @@ export default function DealingRecord() {
 
       <Tabs defaultValue="all" className="w-full">
         <TabsList>
-          <TabsTrigger value="all">All</TabsTrigger>
-          <TabsTrigger value="pending">Pending</TabsTrigger>
-          <TabsTrigger value="completed">Completed</TabsTrigger>
+          <TabsTrigger value="all" onClick={() => setDealStatus("all")}>
+            All
+          </TabsTrigger>
+          <TabsTrigger value="pending" onClick={() => setDealStatus("pending")}>
+            Pending
+          </TabsTrigger>
+          <TabsTrigger
+            value="completed"
+            onClick={() => setDealStatus("completed")}
+          >
+            Completed
+          </TabsTrigger>
         </TabsList>
+
+        {isError ? (
+          <div className="h-96 w-full flex flex-col justify-center items-center">
+            <img src={assets.image.Oops} alt="Oops" className="w-28" />
+            <p className="font-semibold">
+              {recordError?.message || "Something went wrong"}
+            </p>
+          </div>
+        ) : (
+          <></>
+        )}
 
         <TabsContent value="all">
           <div className="space-y-4">
-            {[...Array(10)].map((_, i) => (
-              <Card key={i} className="p-0 border-0 overflow-hidden shadow-xl">
-                <div className="relative">
-                  <img
-                    src={assets.image.BannerTwo}
-                    alt="banner"
-                    className="w-full h-[10rem]"
-                  />
-                  <div className="w-full flex items-end justify-between p-4 absolute top-24">
-                    <Badge>Complete</Badge>
-                    <div className="text-white">
-                      <p className="text-xs font-semibold text-end">Price</p>
-                      <p className="font-semibold">USDC 6990.00</p>
-                    </div>
-                  </div>
-                </div>
-                <CardContent className="pb-2.5 px-2.5 space-y-4">
-                  <div>
-                    <h3 className="text-xl font-semibold">
-                      Hanoi Tour Package
-                    </h3>
-                    <p className="text-accent-foreground">
-                      2025-03-30 20:03:05
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <div className="w-full bg-muted p-4 rounded-xl space-y-2">
-                      <MoneyIcon className="size-6 text-primary" />
-                      <p className="text-xs text-muted-foreground">
-                        Total Price
-                      </p>
-                      <p className="font-semibold">USDC 6990.00</p>
-                    </div>
-
-                    <div className="w-full bg-muted p-4 rounded-xl space-y-2">
-                      <SaveMoneyIcon className="size-6 text-primary" />
-                      <p className="text-xs text-muted-foreground">
-                        Commissions
-                      </p>
-                      <p className="font-semibold">USDC 6990.00</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+            {isLoading || isFetching ? (
+              Array.from({ length: 10 }).map((_, index) => (
+                <DealingCard key={`loading-${index}`} isLoading={true} />
+              ))
+            ) : recordData.length === 0 ? (
+              <div className="flex flex-col items-center justify-center mt-36 text-muted-foreground">
+                <Package2 className="size-16" />
+                <p>No Data Found.</p>
+              </div>
+            ) : (
+              recordData?.map((item, i) => (
+                <DealingCard
+                  key={i}
+                  payload={item}
+                  isLoading={isLoading || isFetching}
+                />
+              ))
+            )}
           </div>
         </TabsContent>
 
         <TabsContent value="pending">
           <div className="space-y-4">
-            {[...Array(5)].map((_, i) => (
-              <Card key={i} className="p-0 border-0 overflow-hidden shadow-xl">
-                <div className="relative">
-                  <img
-                    src={assets.image.BannerTwo}
-                    alt="banner"
-                    className="w-full h-[10rem]"
-                  />
-                  <div className="w-full flex items-end justify-between p-4 absolute top-24">
-                    <Badge>Complete</Badge>
-                    <div className="text-white">
-                      <p className="text-xs font-semibold text-end">Price</p>
-                      <p className="font-semibold">USDC 6990.00</p>
-                    </div>
-                  </div>
-                </div>
-                <CardContent className="pb-2.5 px-2.5 space-y-4">
-                  <div>
-                    <h3 className="text-xl font-semibold">
-                      Hanoi Tour Package
-                    </h3>
-                    <p className="text-accent-foreground">
-                      2025-03-30 20:03:05
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <div className="w-full bg-muted p-4 rounded-xl space-y-2">
-                      <MoneyIcon className="size-6 text-primary" />
-                      <p className="text-xs text-muted-foreground">
-                        Total Price
-                      </p>
-                      <p className="font-semibold">USDC 6990.00</p>
-                    </div>
-
-                    <div className="w-full bg-muted p-4 rounded-xl space-y-2">
-                      <SaveMoneyIcon className="size-6 text-primary" />
-                      <p className="text-xs text-muted-foreground">
-                        Commissions
-                      </p>
-                      <p className="font-semibold">USDC 6990.00</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+            {isLoading || isFetching ? (
+              Array.from({ length: 10 }).map((_, index) => (
+                <DealingCard key={`loading-${index}`} isLoading={true} />
+              ))
+            ) : recordData.length === 0 ? (
+              <div className="flex flex-col items-center justify-center mt-36 text-muted-foreground">
+                <Package2 className="size-16" />
+                <p>No Data Found.</p>
+              </div>
+            ) : (
+              recordData?.map((item, i) => (
+                <DealingCard
+                  key={i}
+                  payload={item}
+                  isLoading={isLoading || isFetching}
+                />
+              ))
+            )}
           </div>
         </TabsContent>
 
         <TabsContent value="completed">
           <div className="space-y-4">
-            {[...Array(3)].map((_, i) => (
-              <Card key={i} className="p-0 border-0 overflow-hidden shadow-xl">
-                <div className="relative">
-                  <img
-                    src={assets.image.BannerTwo}
-                    alt="banner"
-                    className="w-full h-[10rem]"
-                  />
-                  <div className="w-full flex items-end justify-between p-4 absolute top-24">
-                    <Badge>Complete</Badge>
-                    <div className="text-white">
-                      <p className="text-xs font-semibold text-end">Price</p>
-                      <p className="font-semibold">USDC 6990.00</p>
-                    </div>
-                  </div>
-                </div>
-                <CardContent className="pb-2.5 px-2.5 space-y-4">
-                  <div>
-                    <h3 className="text-xl font-semibold">
-                      Hanoi Tour Package
-                    </h3>
-                    <p className="text-accent-foreground">
-                      2025-03-30 20:03:05
-                    </p>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    <div className="w-full bg-muted p-4 rounded-xl space-y-2">
-                      <MoneyIcon className="size-6 text-primary" />
-                      <p className="text-xs text-muted-foreground">
-                        Total Price
-                      </p>
-                      <p className="font-semibold">USDC 6990.00</p>
-                    </div>
-
-                    <div className="w-full bg-muted p-4 rounded-xl space-y-2">
-                      <SaveMoneyIcon className="size-6 text-primary" />
-                      <p className="text-xs text-muted-foreground">
-                        Commissions
-                      </p>
-                      <p className="font-semibold">USDC 6990.00</p>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+            {isLoading || isFetching ? (
+              Array.from({ length: 10 }).map((_, index) => (
+                <DealingCard key={`loading-${index}`} isLoading={true} />
+              ))
+            ) : recordData.length === 0 ? (
+              <div className="flex flex-col items-center justify-center mt-36 text-muted-foreground">
+                <Package2 className="size-16" />
+                <p>No Data Found.</p>
+              </div>
+            ) : (
+              recordData?.map((item, i) => (
+                <DealingCard
+                  key={i}
+                  payload={item}
+                  isLoading={isLoading || isFetching}
+                />
+              ))
+            )}
           </div>
         </TabsContent>
       </Tabs>

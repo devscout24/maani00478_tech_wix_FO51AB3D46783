@@ -43,7 +43,6 @@ export default function Login() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       const user = await memberLogin(values).unwrap();
-      console.log(user);
       dispatch(storeUserInfo(user.data.token));
       toast.success(user.message);
       navigate("/");

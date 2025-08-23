@@ -11,7 +11,16 @@ export const orderApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["order"],
     }),
+
+    dealRecords: build.query({
+      query: (query) => ({
+        url: `/deal-records?status=${query}`,
+        method: "GET",
+        credentials: "include",
+      }),
+      providesTags: ["order"],
+    }),
   }),
 });
 
-export const { useMakeDealMutation } = orderApi;
+export const { useMakeDealMutation, useDealRecordsQuery } = orderApi;

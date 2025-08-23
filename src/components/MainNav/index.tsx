@@ -26,19 +26,22 @@ import { Button } from "../ui/button";
 import { useNavigate } from "react-router";
 import { useAppDispatch } from "@/redux/hooks";
 import { removeUserInfo } from "@/redux/slices/authSlice";
-// import { useMemberLogoutQuery } from "@/redux/api/endpoints/auth.api";
+import { useMemberLogoutMutation } from "@/redux/api/endpoints/auth.api";
+import { toast } from "sonner";
+import useCurrentUser from "@/hooks/useCurrentUser";
 
 export default function MainNav() {
   const [open, setOpen] = useState<boolean>(false);
+  const currentUser = useCurrentUser();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
-  // const { isLoading } = useMemberLogoutQuery({});
+  const [logoutMember] = useMemberLogoutMutation();
 
   const navList = [
     {
       path: "/",
-      title: "My Profile",
+      title: currentUser?.name,
       icon: <UserIcon />,
     },
     {
@@ -98,7 +101,9 @@ export default function MainNav() {
     },
   ];
 
-  const handelLogout = () => {
+  const handelLogout = async () => {
+    const res = await logoutMember({}).unwrap();
+    toast.success(res.message);
     dispatch(removeUserInfo());
     navigate("/auth");
   };
@@ -113,7 +118,7 @@ export default function MainNav() {
         </SheetTrigger>
         <SheetContent className="p-4">
           <SheetTitle className="text-2xl text-muted-foreground font-bold flex items-center justify-between">
-            <h4>Menu</h4>
+            <span>Menu</span>
             <XIcon className="size-6" onClick={() => setOpen(!open)} />
           </SheetTitle>
 

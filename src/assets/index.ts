@@ -1,3 +1,4 @@
+import Default from "./images/default.jpg";
 import BannerOne from "./images/5ddf0e72cdce0348d1fe9ef0089661f4adb9c140.png";
 import BannerTwo from "./images/6fb1d2b34a33749eec583ba0d56d3fea779a00c4.jpg";
 import BannerThree from "./images/9ddeeeaf803597d885bd225c8d267f73686a8b28.png";
@@ -13,9 +14,11 @@ import BannerThirteen from "./images/f4602d461120add03151493be8d4ed74b05d1ae4.pn
 import BannerFourteen from "./images/fb1d9fe721674cd1d592772a247f17254ad5a492.png";
 import BannerFifteen from "./images/Frame 2087328367.png";
 import BannerSixteen from "./images/6325f1608554d61735ca3a8c60436e4b5f7424f11.png";
+import Oops from "./images/oops_4522214.png";
 
 const assets = {
   image: {
+    Default,
     BannerOne,
     BannerTwo,
     BannerThree,
@@ -31,6 +34,7 @@ const assets = {
     BannerFourteen,
     BannerFifteen,
     BannerSixteen,
+    Oops,
   },
 };
 
