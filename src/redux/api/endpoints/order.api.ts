@@ -9,7 +9,7 @@ export const orderApi = baseApi.injectEndpoints({
         credentials: "include",
         body: data,
       }),
-      invalidatesTags: ["order"],
+      invalidatesTags: ["order", "packages"],
     }),
 
     dealRecords: build.query({

@@ -1,16 +1,46 @@
-import assets from "@/assets";
 import ArrowLeftIcon from "@/assets/icons/arrow-left-02-solid-rounded 1.svg?react";
-import CopyIcon from "@/assets/icons/copy-01-stroke-rounded 1.svg?react";
-import Logo from "@/assets/svgs/logo.svg?react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router";
+import WithdrawalMethod from "./components/WithdrawalMethod";
+import { toast } from "sonner";
+import { useWithdrawalRequestMutation } from "@/redux/api/endpoints/withdrawal.api";
+import BalanceCard from "@/components/BalanceCard";
 
 export default function Withdrawal() {
   const navigate = useNavigate();
   const [amount, setAmount] = useState<number>(0);
+  const withdrawPasswordRef = useRef<HTMLInputElement>(null);
+
+  const [makeDeal, { isLoading, isSuccess }] = useWithdrawalRequestMutation();
+
+  const handleMakeDeal = async () => {
+    if (
+      amount > 0 &&
+      withdrawPasswordRef.current &&
+      withdrawPasswordRef.current.value
+    ) {
+      try {
+        await makeDeal({
+          amount,
+          withdrawal_password: withdrawPasswordRef.current.value,
+        }).unwrap();
+
+        if (isSuccess) {
+          toast.success("Withdrawal successful.");
+        }
+      } catch (error) {
+        toast.error(
+          (error as { data?: { message?: string } })?.data?.message ||
+            "Something went wrong."
+        );
+      }
+    } else {
+      toast.error("Please fill all the fields.");
+    }
+  };
 
   return (
     <section className="p-4 space-y-4">
@@ -21,38 +51,9 @@ export default function Withdrawal() {
         </h4>
       </div>
 
-      <div className="w-full h-fit relative">
-        <img
-          src={assets.image.BannerFifteen}
-          alt="banner-img"
-          className="w-full"
-        />
-        <div className="m-4 absolute top-0 right-0 left-0 bottom-0 flex flex-col text-white">
-          <Logo className="w-[8.375rem] h-[2rem]" />
-          <div className="mt-auto">
-            <p className="text-accent-foreground text-xs">Account Balance</p>
-            <p className="text-xl font-semibold">USDC 12,000</p>
-          </div>
-        </div>
-      </div>
+      <BalanceCard />
 
-      <div className="space-y-2 mt-8">
-        <h4 className="font-semibold">Withdrawal Method</h4>
-        <div className="bg-accent px-6 py-4 rounded-xl">
-          <div className="font-semibold flex items-center justify-between text-muted-foreground">
-            {["Zara14", "USDT", "TRC20"].map((item) => (
-              <p key={item}>{item}</p>
-            ))}
-          </div>
-
-          <div className="flex items-center gap-2 mt-2">
-            <Input className="bg-white" />
-            <Button size="icon" variant="ghost" className="p-0">
-              <CopyIcon className="text-muted-foreground size-6" />
-            </Button>
-          </div>
-        </div>
-      </div>
+      <WithdrawalMethod />
 
       <div className="space-y-2 mt-8">
         <Label className="font-semibold">Withdrawal Amount</Label>
@@ -79,11 +80,21 @@ export default function Withdrawal() {
 
       <div className="space-y-2 mt-8">
         <Label className="font-semibold">Withdrawal Password</Label>
-        <Input placeholder="Password" type="password" />
+        <Input
+          placeholder="Password"
+          type="password"
+          ref={withdrawPasswordRef}
+        />
       </div>
 
       <div>
-        <Button className="w-full">Confirm</Button>
+        <Button
+          className="w-full"
+          disabled={isLoading || isSuccess}
+          onClick={handleMakeDeal}
+        >
+          Confirm
+        </Button>
       </div>
     </section>
   );

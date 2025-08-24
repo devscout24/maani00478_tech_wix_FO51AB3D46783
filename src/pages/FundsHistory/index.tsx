@@ -62,13 +62,15 @@ export default function FundsHistory() {
 
       <div className="w-full rounded-xl p-4 bg-muted space-y-4">
         <p className="text-muted-foreground text-xs">Total Added This Month</p>
-        <h4 className="text-2xl font-semibold">USDC 4,324.41</h4>
+        <h4 className="text-2xl font-semibold">
+          USDC {depositsData?.data?.thisMonthDepositesAmount}
+        </h4>
       </div>
 
       <div>
         <h4 className="font-semibold">All Transactions</h4>
         <div className="space-y-4 mt-2">
-          {depositsData.data.map((item: TTransaction) => (
+          {depositsData?.data?.records.map((item: TTransaction) => (
             <div
               key={item.id}
               className="p-2.5 bg-muted flex items-center gap-4 rounded-xl"

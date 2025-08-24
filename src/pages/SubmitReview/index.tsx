@@ -2,7 +2,6 @@ import { useNavigate } from "react-router";
 import ArrowLeftIcon from "@/assets/icons/arrow-left-02-solid-rounded 1.svg?react";
 import MoneyIcon from "@/assets/icons/money-03-solid-rounded 1.svg?react";
 import SaveMoneyIcon from "@/assets/icons/save-money-dollar-solid-sharp 1.svg?react";
-import StarIcon from "@/assets/icons/star-solid-standard 1.svg?react";
 import ArrowIcon from "@/assets/icons/arrow-right-01-stroke-sharp 1.svg?react";
 import {
   Collapsible,
@@ -14,6 +13,9 @@ import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { useReserveJourneyPackageQuery } from "@/redux/api/endpoints/package.api";
 import assets from "@/assets";
+import Rating from "@/components/Rating";
+import { toast } from "sonner";
+import { useMakeDealMutation } from "@/redux/api/endpoints/order.api";
 
 type TPackage = {
   id: number;
@@ -28,12 +30,18 @@ export default function SubmitReview() {
   const navigate = useNavigate();
   const [open, setOpen] = useState<boolean>(false);
   const [review, setReview] = useState<string | null>(null);
+  const [rating, setRating] = useState<number>(0);
 
   const { data, error, isLoading, isFetching, isError } =
     useReserveJourneyPackageQuery({});
   const packageData: TPackage = data?.data;
   const packageError =
     error && "data" in error ? (error.data as { message: string }) : undefined;
+
+  const [
+    makeDeal,
+    { isLoading: isMakingDealLoading, isError: isDealError, error: dealError },
+  ] = useMakeDealMutation();
 
   if (isLoading || isFetching) {
     return (
@@ -55,7 +63,39 @@ export default function SubmitReview() {
     );
   }
 
-  console.log("packageData", packageData);
+  const handleSubmit = async () => {
+    if (!review || rating === 0) {
+      toast.error("Please give a review and rating.");
+      return;
+    }
+
+    try {
+      const res = await makeDeal({
+        package_id: packageData?.id,
+        review,
+        rating,
+      }).unwrap();
+
+      if (isDealError) {
+        toast.error(
+          (res &&
+            "data" in res &&
+            (res.data as { message?: string })?.message) ||
+            "Something went wrong."
+        );
+        return;
+      }
+      toast.success("Review submitted successfully.");
+      navigate("/data-optimization");
+    } catch {
+      toast.error(
+        (dealError &&
+          "data" in dealError &&
+          (dealError.data as { message?: string })?.message) ||
+          "Something went wrong."
+      );
+    }
+  };
 
   return (
     <section>
@@ -97,9 +137,7 @@ export default function SubmitReview() {
       <div className="p-4 flex items-center justify-between">
         <p className="font-semibold">Rating</p>
         <div className="flex items-center gap-2">
-          {[...Array(5)].map((_, i) => (
-            <StarIcon key={i} className="text-primary" />
-          ))}
+          <Rating rating={rating} setRating={setRating} />
         </div>
       </div>
 
@@ -151,7 +189,13 @@ export default function SubmitReview() {
       </div>
 
       <div className="p-4">
-        <Button className="w-full">Submit</Button>
+        <Button
+          className="w-full"
+          onClick={handleSubmit}
+          disabled={!review || !rating || isMakingDealLoading}
+        >
+          Submit
+        </Button>
       </div>
     </section>
   );

@@ -1,7 +1,6 @@
 import ArrowLeftIcon from "@/assets/icons/arrow-left-02-solid-rounded 1.svg?react";
 import { useNavigate } from "react-router";
 import Logo from "@/assets/svgs/logo.svg?react";
-import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
@@ -45,7 +44,6 @@ export default function WalletInfo() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       const res = await storeWalletInfo(values).unwrap();
-      console.log("res", res);
       toast.success(res.message);
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
@@ -118,30 +116,38 @@ export default function WalletInfo() {
             control={form.control}
             name="cryptocurrency"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="space-y-3">
                 <FormLabel>Currency</FormLabel>
                 <FormControl>
                   <RadioGroup
-                    defaultValue="USDT"
-                    className="flex items-center justify-between"
-                    {...field}
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                    className="flex justify-between items-center"
                   >
-                    <div className="flex items-center gap-3">
-                      <RadioGroupItem value="USDT" id="r1" />
-                      <Label htmlFor="r1">USDT</Label>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <RadioGroupItem value="USDC" id="r2" />
-                      <Label htmlFor="r2">USDC</Label>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <RadioGroupItem value="ETH" id="r3" />
-                      <Label htmlFor="r3">ETH</Label>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <RadioGroupItem value="BTC" id="r3" />
-                      <Label htmlFor="r3">BTC</Label>
-                    </div>
+                    <FormItem className="flex items-center gap-3">
+                      <FormControl>
+                        <RadioGroupItem value="USDT" />
+                      </FormControl>
+                      <FormLabel className="font-normal">USDT</FormLabel>
+                    </FormItem>
+                    <FormItem className="flex items-center gap-3">
+                      <FormControl>
+                        <RadioGroupItem value="USDC" />
+                      </FormControl>
+                      <FormLabel className="font-normal">USDC</FormLabel>
+                    </FormItem>
+                    <FormItem className="flex items-center gap-3">
+                      <FormControl>
+                        <RadioGroupItem value="ETH" />
+                      </FormControl>
+                      <FormLabel className="font-normal">ETH</FormLabel>
+                    </FormItem>
+                    <FormItem className="flex items-center gap-3">
+                      <FormControl>
+                        <RadioGroupItem value="BTC" />
+                      </FormControl>
+                      <FormLabel className="font-normal">BTC</FormLabel>
+                    </FormItem>
                   </RadioGroup>
                 </FormControl>
                 <FormMessage />
@@ -153,26 +159,32 @@ export default function WalletInfo() {
             control={form.control}
             name="network"
             render={({ field }) => (
-              <FormItem>
+              <FormItem className="space-y-3">
                 <FormLabel>Network</FormLabel>
                 <FormControl>
                   <RadioGroup
-                    defaultValue="TRC20"
-                    className="flex items-center justify-between"
-                    {...field}
+                    onValueChange={field.onChange}
+                    defaultValue={field.value}
+                    className="flex justify-between items-center"
                   >
-                    <div className="flex items-center gap-3">
-                      <RadioGroupItem value="TRC20" id="t1" />
-                      <Label htmlFor="t1">TRC20</Label>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <RadioGroupItem value="ERC20" id="t2" />
-                      <Label htmlFor="t2">ERC20</Label>
-                    </div>
-                    <div className="flex items-center gap-3">
-                      <RadioGroupItem value="Bitcoin" id="t3" />
-                      <Label htmlFor="t3">Bitcoin</Label>
-                    </div>
+                    <FormItem className="flex items-center gap-3">
+                      <FormControl>
+                        <RadioGroupItem value="TRC20" />
+                      </FormControl>
+                      <FormLabel className="font-normal">TRC20</FormLabel>
+                    </FormItem>
+                    <FormItem className="flex items-center gap-3">
+                      <FormControl>
+                        <RadioGroupItem value="ERC20" />
+                      </FormControl>
+                      <FormLabel className="font-normal">ERC20</FormLabel>
+                    </FormItem>
+                    <FormItem className="flex items-center gap-3">
+                      <FormControl>
+                        <RadioGroupItem value="Bitcoin" />
+                      </FormControl>
+                      <FormLabel className="font-normal">Bitcoin</FormLabel>
+                    </FormItem>
                   </RadioGroup>
                 </FormControl>
                 <FormMessage />

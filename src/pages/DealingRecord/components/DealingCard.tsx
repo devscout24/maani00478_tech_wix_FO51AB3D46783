@@ -104,16 +104,20 @@ export default function DealingCard({
             >
               {status}
             </Badge>
-            <div className="text-white">
-              <p className="text-xs font-semibold text-end">Price</p>
-              <p className="font-semibold">USDC {amount}</p>
-            </div>
           </div>
         </div>
         <CardContent className="pb-2.5 px-2.5 space-y-4">
-          <div>
-            <h3 className="text-xl font-semibold">{package_title}</h3>
-            <p className="text-accent-foreground">{package_duration} days</p>
+          <div className="flex items-center justify-between">
+            <div>
+              <h3 className="text-xl font-semibold">{package_title}</h3>
+              <p className="text-accent-foreground">{package_duration} days</p>
+            </div>
+            <div>
+              <p className="text-xs font-semibold text-accent-foreground text-end">
+                Price
+              </p>
+              <p className="font-semibold text-end">USDC {amount}</p>
+            </div>
           </div>
           <div className="flex items-center gap-4">
             <div className="w-full bg-muted p-4 rounded-xl space-y-2">

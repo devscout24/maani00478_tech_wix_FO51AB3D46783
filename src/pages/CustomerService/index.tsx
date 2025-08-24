@@ -6,6 +6,20 @@ import { useNavigate } from "react-router";
 export default function CustomerService() {
   const navigate = useNavigate();
 
+  const handleWhatsAppClick = () => {
+    // Format the phone number by removing any non-digit characters except the '+'
+    const formattedNumber = import.meta.env.VITE_CLIENT_WHATSAPP.replace(
+      /[^\d+]/g,
+      ""
+    );
+
+    // Create the WhatsApp URL
+    const whatsappUrl = `https://wa.me/${formattedNumber}`;
+
+    // Open the URL in a new tab
+    window.open(whatsappUrl, "_blank");
+  };
+
   return (
     <section className="p-4">
       <div>
@@ -29,7 +43,9 @@ export default function CustomerService() {
           <p className="text-xs text-muted-foreground">
             Customer Service Operation Time:
           </p>
-          <Button className="w-full">Direct To Whatsapp</Button>
+          <Button className="w-full" onClick={handleWhatsAppClick}>
+            Direct To Whatsapp
+          </Button>
         </div>
       </div>
     </section>
