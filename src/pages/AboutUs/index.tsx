@@ -2,6 +2,7 @@ import ArrowLeftIcon from "@/assets/icons/arrow-left-02-solid-rounded 1.svg?reac
 import { useNavigate } from "react-router";
 import Logo from "@/assets/svgs/logo.svg?react";
 import assets from "@/assets";
+import { Button } from "@/components/ui/button";
 
 export default function AboutUs() {
   const navigate = useNavigate();
@@ -40,7 +41,14 @@ export default function AboutUs() {
     <section className="p-4 space-y-6">
       <div>
         <div className="flex items-center">
-          <ArrowLeftIcon className="size-8" onClick={() => navigate("/")} />
+          <Button
+            variant="ghost"
+            size="icon"
+            className="rounded-full group"
+            onClick={() => navigate("/")}
+          >
+            <ArrowLeftIcon className="size-6 duration-500 group-hover:scale-125 group-hover:text-primary" />
+          </Button>
           <h4 className="w-full text-[.8rem] font-semibold text-center">
             Company Introduction
           </h4>

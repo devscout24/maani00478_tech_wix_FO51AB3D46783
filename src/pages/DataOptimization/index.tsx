@@ -21,7 +21,14 @@ export default function DataOptimization() {
         <div className="bg-[url('/5ddf0e72cdce0348d1fe9ef0089661f4adb9c140.png')]">
           <div className="p-4">
             <div className="flex items-center text-white">
-              <ArrowLeftIcon className="size-8" onClick={() => navigate("/")} />
+              <Button
+                variant="ghost"
+                size="icon"
+                className="rounded-full group"
+                onClick={() => navigate("/")}
+              >
+                <ArrowLeftIcon className="size-6 duration-500 group-hover:scale-125 group-hover:text-primary" />
+              </Button>
               <h4 className="w-full text-[.8rem] font-semibold text-center">
                 Data Optimization
               </h4>
@@ -76,7 +83,14 @@ export default function DataOptimization() {
         <div className="bg-[url('/5ddf0e72cdce0348d1fe9ef0089661f4adb9c140.png')]">
           <div className="p-4">
             <div className="flex items-center text-white">
-              <ArrowLeftIcon className="size-8" onClick={() => navigate("/")} />
+              <Button
+                variant="ghost"
+                size="icon"
+                className="rounded-full group"
+                onClick={() => navigate("/")}
+              >
+                <ArrowLeftIcon className="size-6 duration-500 group-hover:scale-125 group-hover:text-primary" />
+              </Button>
               <h4 className="w-full text-[.8rem] font-semibold text-center">
                 Data Optimization
               </h4>

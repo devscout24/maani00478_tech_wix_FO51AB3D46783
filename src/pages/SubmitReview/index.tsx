@@ -32,6 +32,19 @@ export default function SubmitReview() {
   const [review, setReview] = useState<string | null>(null);
   const [rating, setRating] = useState<number>(0);
 
+  const reviews = [
+    "This package covered everything from flights to hotel and even daily tours, such a stress-free way to travel!",
+    "I loved how affordable this package was compared to booking things separately. Totally worth it!",
+    "The itinerary was perfectly planned, enough sightseeing but also enough free time to relax.",
+    "Highly recommend this travel package for families! The kids enjoyed every activity.",
+    "Our guide was amazing, very knowledgeable, and made the whole experience unforgettable.",
+    "This was the smoothest trip I’ve ever had, airport pickup, hotel check-in, tours, everything was handled.",
+    "Perfect for honeymooners! The romantic dinner and beach resort stay were highlights of the trip.",
+    "I appreciated the comfortable transport and well-organized day trips. No stress, just fun.",
+    "We got to see hidden gems we would never find on our own, such a unique experience!",
+    "Excellent value for money. I’ll definitely book with this company again for my next vacation.",
+  ];
+
   const { data, error, isLoading, isFetching, isError } =
     useReserveJourneyPackageQuery({});
   const packageData: TPackage = data?.data;
@@ -104,10 +117,14 @@ export default function SubmitReview() {
       >
         {/* <img src={packageData?.image} alt="banner" /> */}
         <div className="p-4 text-white">
-          <ArrowLeftIcon
-            className="size-8"
+          <Button
+            variant="ghost"
+            size="icon"
+            className="rounded-full group"
             onClick={() => navigate("/data-optimization")}
-          />
+          >
+            <ArrowLeftIcon className="size-6 duration-500 group-hover:scale-125 group-hover:text-primary" />
+          </Button>
         </div>
         <div className="w-full h-5 bg-white rounded-t-2xl mt-auto" />
       </div>
@@ -158,14 +175,7 @@ export default function SubmitReview() {
           </CollapsibleTrigger>
           <CollapsibleContent className="p-4">
             <div className={cn("space-y-4", review ? "hidden" : "block")}>
-              {[
-                "Nice Service..!",
-                "Apprised Your Service.",
-                "Super helpful and easy to use. Loved the interface!",
-                "Exactly what I was looking for. Works perfectly",
-                "Very user-friendly. Highly recommend this app!",
-                "Excellent features and clean design. Keep it up!",
-              ].map((item) => (
+              {reviews.map((item) => (
                 <div
                   key={item}
                   className="text-[0.875rem] p-2 bg-accent hover:bg-accent/50 rounded-xl cursor-pointer"

@@ -24,7 +24,14 @@ export default function CustomerService() {
     <section className="p-4">
       <div>
         <div className="flex items-center">
-          <ArrowLeftIcon className="size-8" onClick={() => navigate("/")} />
+          <Button
+            variant="ghost"
+            size="icon"
+            className="rounded-full group"
+            onClick={() => navigate("/")}
+          >
+            <ArrowLeftIcon className="size-6 duration-500 group-hover:scale-125 group-hover:text-primary" />
+          </Button>
           <h4 className="w-full text-[.8rem] font-semibold text-center">
             Support
           </h4>

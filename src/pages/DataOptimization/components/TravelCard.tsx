@@ -76,7 +76,7 @@ export default function TravelCard({
       <img
         src={imageError || !image ? assets.image.Default : image}
         alt="banner"
-        className="w-full"
+        className="w-full h-72"
         onError={handleImageError}
       />
       <CardContent className="pb-4 space-y-1">

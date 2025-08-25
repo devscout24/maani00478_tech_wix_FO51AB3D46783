@@ -1,4 +1,5 @@
 import ArrowLeftIcon from "@/assets/icons/arrow-left-02-solid-rounded 1.svg?react";
+import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router";
 
 export default function TermAndConditions() {
@@ -21,9 +22,16 @@ export default function TermAndConditions() {
     <section className="p-4 space-y-6">
       <div>
         <div className="flex items-center">
-          <ArrowLeftIcon className="size-8" onClick={() => navigate("/")} />
+          <Button
+            variant="ghost"
+            size="icon"
+            className="rounded-full group"
+            onClick={() => navigate("/")}
+          >
+            <ArrowLeftIcon className="size-6 duration-500 group-hover:scale-125 group-hover:text-primary" />
+          </Button>
           <h4 className="w-full text-[.8rem] font-semibold text-center">
-            Trams & Condition
+            Terms & Condition
           </h4>
         </div>
       </div>

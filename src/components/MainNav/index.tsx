@@ -114,7 +114,14 @@ export default function MainNav() {
 
       <Sheet open={open} onOpenChange={setOpen}>
         <SheetTrigger>
-          <MenuIcon className="size-6" />
+          <Button
+            variant="ghost"
+            size="icon"
+            className="rounded-full hover:text-white"
+            onClick={() => navigate("/")}
+          >
+            <MenuIcon className="size-6" />
+          </Button>
         </SheetTrigger>
         <SheetContent className="p-4">
           <SheetTitle className="text-2xl text-muted-foreground font-bold flex items-center justify-between">
@@ -129,20 +136,20 @@ export default function MainNav() {
               <Button
                 key={item.title}
                 variant="ghost"
-                className="w-full hover:bg-accent text-right"
+                className="w-full group hover:bg-accent text-right"
                 onClick={() => navigate(item.path)}
               >
-                <div className="w-full flex items-center gap-2 py-10">
+                <div className="w-full flex items-center gap-2 py-10 duration-500 group-hover:translate-x-6 group-hover:text-primary">
                   {item.icon} {item.title}
                 </div>
               </Button>
             ))}
             <Button
               variant="ghost"
-              className="w-full hover:bg-accent text-right"
+              className="w-full group hover:bg-accent text-right"
               onClick={handelLogout}
             >
-              <div className="w-full flex items-center gap-2 py-10">
+              <div className="w-full flex items-center gap-2 py-10 duration-500 group-hover:translate-x-6 group-hover:text-primary">
                 <LogoutIcon /> Logout Account
               </div>
             </Button>

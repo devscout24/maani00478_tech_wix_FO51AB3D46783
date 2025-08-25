@@ -94,7 +94,7 @@ export default function DealingCard({
                 : package_image
             }
             alt="banner"
-            className="w-full min-h-[15rem]"
+            className="w-full h-[15rem]"
             onError={handleImageError}
           />
           <div className="w-full flex items-end justify-between p-4 absolute bottom-0">

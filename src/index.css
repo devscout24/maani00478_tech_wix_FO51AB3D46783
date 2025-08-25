@@ -250,7 +250,7 @@
   }
 }
 
-.loader {
+/* .loader {
   width: 50px;
   aspect-ratio: 1;
   border-radius: 50%;
@@ -266,5 +266,50 @@
 @keyframes l25 {
   100% {
     transform: rotate(1turn);
+  }
+} */
+
+/* HTML: <div class="loader"></div> */
+.loader {
+  width: fit-content;
+  font-size: 50px;
+  font-family: system-ui, sans-serif;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #0000;
+  -webkit-text-stroke: 1px oklch(0.6214 0.251289 1.2036);
+  background: conic-gradient(
+        from -135deg at 100% 50%,
+        oklch(0.6214 0.251289 1.2036) 90deg,
+        #0000 0
+      )
+      text no-repeat,
+    conic-gradient(
+        from -135deg at 1lh 50%,
+        #0000 90deg,
+        oklch(0.6214 0.251289 1.2036) 0
+      )
+      text no-repeat;
+  animation: l6 2s linear infinite;
+}
+.loader:before {
+  content: "LastMinute";
+}
+@keyframes l6 {
+  0% {
+    background-size: 0 200%;
+    background-position: 0 0, 100% 0;
+  }
+  50% {
+    background-size: calc(60% + 0.5lh) 200%;
+    background-position: 0 0, 100% 0;
+  }
+  50.01% {
+    background-size: calc(60% + 0.5lh) 200%;
+    background-position: 0 100%, 100% 100%;
+  }
+  100% {
+    background-size: 0 200%;
+    background-position: 0 100%, 100% 100%;
   }
 }
