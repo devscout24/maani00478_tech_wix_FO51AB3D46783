@@ -17,7 +17,7 @@ export default function AgentMode() {
           >
             <ArrowLeftIcon className="size-6 duration-500 group-hover:scale-125 group-hover:text-primary" />
           </Button>
-          <h4 className="w-full text-[.8rem] font-semibold text-center">
+          <h4 className="w-full text-[.8rem] font-semibold text-center -ml-10">
             Agent Mode
           </h4>
         </div>

@@ -18,6 +18,7 @@ import TermAndConditions from "@/pages/TermAndConditions";
 import AgentMode from "@/pages/AgentMode";
 import FAQs from "@/pages/FAQs";
 import AboutUs from "@/pages/AboutUs";
+import MyProfile from "@/pages/MyProfile";
 
 const router = createBrowserRouter([
   {
@@ -32,6 +33,10 @@ const router = createBrowserRouter([
       {
         index: true,
         element: <HomePage />,
+      },
+      {
+        path: "/my-profile",
+        element: <MyProfile />,
       },
       {
         path: "/data-optimization",

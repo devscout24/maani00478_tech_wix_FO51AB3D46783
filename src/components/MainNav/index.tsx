@@ -40,7 +40,7 @@ export default function MainNav() {
 
   const navList = [
     {
-      path: "/",
+      path: "/my-profile",
       title: currentUser?.name,
       icon: <UserIcon />,
     },

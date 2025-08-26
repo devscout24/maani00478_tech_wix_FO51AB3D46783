@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button";
 
 export default function DealingRecord() {
   const navigate = useNavigate();
-  const [dealStatus, setDealStatus] = useState<"all" | "pending" | "completed">(
+  const [dealStatus, setDealStatus] = useState<"all" | "on_hold" | "completed">(
     "all"
   );
 
@@ -32,7 +32,7 @@ export default function DealingRecord() {
           >
             <ArrowLeftIcon className="size-6 duration-500 group-hover:scale-125 group-hover:text-primary" />
           </Button>
-          <h4 className="w-full text-[.8rem] font-semibold text-center">
+          <h4 className="w-full text-[.8rem] font-semibold text-center -ml-10">
             Dealing Record
           </h4>
         </div>
@@ -43,8 +43,8 @@ export default function DealingRecord() {
           <TabsTrigger value="all" onClick={() => setDealStatus("all")}>
             All
           </TabsTrigger>
-          <TabsTrigger value="pending" onClick={() => setDealStatus("pending")}>
-            Pending
+          <TabsTrigger value="on-hold" onClick={() => setDealStatus("on_hold")}>
+            <span className="text-nowrap">On-Hold</span>
           </TabsTrigger>
           <TabsTrigger
             value="completed"
@@ -88,7 +88,7 @@ export default function DealingRecord() {
           </div>
         </TabsContent>
 
-        <TabsContent value="pending">
+        <TabsContent value="on-hold">
           <div className="space-y-4">
             {isLoading || isFetching ? (
               Array.from({ length: 10 }).map((_, index) => (

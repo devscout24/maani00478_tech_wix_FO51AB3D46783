@@ -29,7 +29,7 @@ export default function DataOptimization() {
               >
                 <ArrowLeftIcon className="size-6 duration-500 group-hover:scale-125 group-hover:text-primary" />
               </Button>
-              <h4 className="w-full text-[.8rem] font-semibold text-center">
+              <h4 className="w-full text-[.8rem] font-semibold text-center -ml-10">
                 Data Optimization
               </h4>
             </div>
@@ -91,7 +91,7 @@ export default function DataOptimization() {
               >
                 <ArrowLeftIcon className="size-6 duration-500 group-hover:scale-125 group-hover:text-primary" />
               </Button>
-              <h4 className="w-full text-[.8rem] font-semibold text-center">
+              <h4 className="w-full text-[.8rem] font-semibold text-center -ml-10">
                 Data Optimization
               </h4>
             </div>
@@ -102,7 +102,7 @@ export default function DataOptimization() {
               <h4 className="text-[.8rem] font-semibold">Account Balance</h4>
               <h2 className="text-2xl font-semibold">USDC</h2>
               <h2 className="text-2xl font-semibold">
-                {myInfoData?.data?.balance}
+                {Number(myInfoData?.data?.balance).toFixed(2)}
               </h2>
             </div>
 
@@ -112,7 +112,7 @@ export default function DataOptimization() {
               <h4 className="text-[.8rem] font-semibold">Commission</h4>
               <h2 className="text-2xl font-semibold">USDC</h2>
               <h2 className="text-2xl font-semibold">
-                {myInfoData?.data?.commission}
+                {Number(myInfoData?.data?.commission).toFixed(2)}
               </h2>
             </div>
           </div>

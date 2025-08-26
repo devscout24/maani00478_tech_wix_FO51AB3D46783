@@ -5,6 +5,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 import MoneyIcon from "@/assets/icons/money-03-solid-rounded 1.svg?react";
 import SaveMoneyIcon from "@/assets/icons/save-money-dollar-solid-sharp 1.svg?react";
 import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { useAcceptHoldDealMutation } from "@/redux/api/endpoints/order.api";
+import { toast } from "sonner";
 
 export type TDealingCard = {
   id: number;
@@ -13,7 +16,7 @@ export type TDealingCard = {
   deal_number: number;
   amount: string;
   user_commision: string;
-  status: "pending" | "completed";
+  status: "on_hold" | "completed";
   package_title: string;
   package_duration: number;
   package_price: number;
@@ -40,9 +43,30 @@ export default function DealingCard({
   // State to track if image failed to load
   const [imageError, setImageError] = useState(false);
 
+  const [
+    acceptHoldDeal,
+    { isLoading: isAcceptingLoading, isSuccess, error: acceptError },
+  ] = useAcceptHoldDealMutation();
+
   // Function to handle image loading errors
   const handleImageError = () => {
     setImageError(true);
+  };
+
+  const handleAcceptHoldDeal = async () => {
+    try {
+      await acceptHoldDeal(payload?.id).unwrap();
+
+      if (isSuccess) {
+        toast.success("Deal accepted successfully.");
+      }
+    } catch {
+      toast.error(
+        acceptError && "data" in acceptError
+          ? (acceptError.data as { message: string }).message
+          : "Something went wrong."
+      );
+    }
   };
 
   if (isLoading) {
@@ -99,7 +123,7 @@ export default function DealingCard({
           />
           <div className="w-full flex items-end justify-between p-4 absolute bottom-0">
             <Badge
-              variant={status === "pending" ? "inProcess" : "complete"}
+              variant={status === "on_hold" ? "inProcess" : "complete"}
               className="uppercase"
             >
               {status}
@@ -116,23 +140,38 @@ export default function DealingCard({
               <p className="text-xs font-semibold text-accent-foreground text-end">
                 Price
               </p>
-              <p className="font-semibold text-end">USDC {amount}</p>
+              <p className="font-semibold text-end">
+                USDC {Number(amount).toFixed(2)}
+              </p>
             </div>
           </div>
           <div className="flex items-center gap-4">
             <div className="w-full bg-muted p-4 rounded-xl space-y-2">
               <MoneyIcon className="size-6 text-primary" />
               <p className="text-xs text-muted-foreground">Total Price</p>
-              <p className="font-semibold">USDC {package_price}</p>
+              <p className="font-semibold">
+                USDC {Number(package_price).toFixed(2)}
+              </p>
             </div>
 
             <div className="w-full bg-muted p-4 rounded-xl space-y-2">
               <SaveMoneyIcon className="size-6 text-primary" />
               <p className="text-xs text-muted-foreground">Commissions</p>
-              <p className="font-semibold">USDC {user_commision}</p>
+              <p className="font-semibold">
+                USDC {Number(user_commision).toFixed(2)}
+              </p>
             </div>
           </div>
         </CardContent>
+        {status === "on_hold" && (
+          <Button
+            className="w-full"
+            onClick={handleAcceptHoldDeal}
+            disabled={isAcceptingLoading}
+          >
+            Accept Hold Deal
+          </Button>
+        )}
       </Card>
     </section>
   );

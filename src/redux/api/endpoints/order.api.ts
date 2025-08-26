@@ -20,7 +20,20 @@ export const orderApi = baseApi.injectEndpoints({
       }),
       providesTags: ["order"],
     }),
+
+    acceptHoldDeal: build.mutation({
+      query: (dealId) => ({
+        url: `/accept-hold-deal/${dealId}`,
+        method: "POST",
+        credentials: "include",
+      }),
+      invalidatesTags: ["order"],
+    }),
   }),
 });
 
-export const { useMakeDealMutation, useDealRecordsQuery } = orderApi;
+export const {
+  useMakeDealMutation,
+  useDealRecordsQuery,
+  useAcceptHoldDealMutation,
+} = orderApi;

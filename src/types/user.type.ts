@@ -41,7 +41,7 @@ export type TUserInfo = {
   username: string;
   name: string;
   email: string;
-  roles: string;
+  roles: string[]; // Now an array of strings
   level_id: number | null;
   balance: string;
   commission: string;
@@ -49,4 +49,5 @@ export type TUserInfo = {
   journeys: number;
   invitation_code: string | null;
   targetDealCompletionPercentage: number;
+  avatar: string;
 };

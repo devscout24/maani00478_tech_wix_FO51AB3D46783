@@ -131,7 +131,7 @@ export default function SubmitReview() {
 
       <div className="p-4">
         <p className="w-fit ml-auto text-primary font-semibold -mt-6">
-          USDC {packageData?.price}
+          USDC {packageData?.price.toFixed(2)}
         </p>
 
         <h4 className="text-xl font-semibold">{packageData?.title}</h4>
@@ -141,13 +141,15 @@ export default function SubmitReview() {
         <div className="w-full bg-muted p-4 rounded-xl space-y-2">
           <MoneyIcon className="size-6 text-primary" />
           <p className="text-xs text-muted-foreground">Total Price</p>
-          <p className="font-semibold">USDC {packageData?.price}</p>
+          <p className="font-semibold">USDC {packageData?.price.toFixed(2)}</p>
         </div>
 
         <div className="w-full bg-muted p-4 rounded-xl space-y-2">
           <SaveMoneyIcon className="size-6 text-primary" />
           <p className="text-xs text-muted-foreground">Commissions</p>
-          <p className="font-semibold">USDC {packageData?.commission}</p>
+          <p className="font-semibold">
+            USDC {packageData?.commission.toFixed(2)}
+          </p>
         </div>
       </div>
 
