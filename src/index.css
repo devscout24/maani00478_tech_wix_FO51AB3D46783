@@ -313,3 +313,9 @@
     background-position: 0 100%, 100% 100%;
   }
 }
+
+.writing-mode-vertical-rl {
+  writing-mode: vertical-lr;
+  /* text-orientation: upright; */
+  /* text-orientation: sideways; */
+}

@@ -31,13 +31,24 @@ export const authApi = baseApi.injectEndpoints({
       invalidatesTags: ["auth"],
     }),
 
+    memberUpdate: build.mutation({
+      query: (data) => ({
+        url: "/profile/update",
+        method: "POST",
+        credentials: "include",
+        body: data,
+      }),
+      invalidatesTags: ["auth", "my-info"],
+    }),
+
     myInfo: build.query({
       query: () => ({
         url: "/my-info",
         method: "GET",
         credentials: "include",
       }),
-      providesTags: ["auth"],
+      providesTags: ["auth", "my-info"],
+      keepUnusedDataFor: 0,
     }),
   }),
 });
@@ -46,5 +57,6 @@ export const {
   useMemberLoginMutation,
   useMemberRegisterMutation,
   useMemberLogoutMutation,
+  useMemberUpdateMutation,
   useMyInfoQuery,
 } = authApi;

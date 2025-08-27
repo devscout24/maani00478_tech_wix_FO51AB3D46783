@@ -28,11 +28,9 @@ import { useAppDispatch } from "@/redux/hooks";
 import { removeUserInfo } from "@/redux/slices/authSlice";
 import { useMemberLogoutMutation } from "@/redux/api/endpoints/auth.api";
 import { toast } from "sonner";
-import useCurrentUser from "@/hooks/useCurrentUser";
 
 export default function MainNav() {
   const [open, setOpen] = useState<boolean>(false);
-  const currentUser = useCurrentUser();
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
@@ -41,7 +39,7 @@ export default function MainNav() {
   const navList = [
     {
       path: "/my-profile",
-      title: currentUser?.name,
+      title: "My Profile",
       icon: <UserIcon />,
     },
     {

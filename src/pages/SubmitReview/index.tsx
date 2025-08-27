@@ -16,6 +16,7 @@ import assets from "@/assets";
 import Rating from "@/components/Rating";
 import { toast } from "sonner";
 import { useMakeDealMutation } from "@/redux/api/endpoints/order.api";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 type TPackage = {
   id: number;
@@ -98,7 +99,7 @@ export default function SubmitReview() {
         );
         return;
       }
-      toast.success("Review submitted successfully.");
+      toast.success(res?.message);
       navigate("/data-optimization");
     } catch {
       toast.error(
@@ -111,12 +112,19 @@ export default function SubmitReview() {
   };
 
   return (
-    <section>
+    <section className="relative">
       <div
-        className={`h-[26.5rem] bg-[url('/6325f1608554d61735ca3a8c60436e4b5f7424f11.png')] bg-cover bg-center flex flex-col`}
+        // className={`h-[26.5rem] bg-[url('/6325f1608554d61735ca3a8c60436e4b5f7424f11.png')] bg-cover bg-center flex flex-col`}
+        className={`h-[26.5rem] flex flex-col relative`}
       >
-        {/* <img src={packageData?.image} alt="banner" /> */}
-        <div className="p-4 text-white">
+        <div className="h-[30rem]">
+          <img
+            src={packageData?.image}
+            alt="banner"
+            className="w-full h-full bg-center bg-cover"
+          />
+        </div>
+        <div className="p-4 text-white absolute">
           <Button
             variant="ghost"
             size="icon"
@@ -129,85 +137,94 @@ export default function SubmitReview() {
         <div className="w-full h-5 bg-white rounded-t-2xl mt-auto" />
       </div>
 
-      <div className="p-4">
-        <p className="w-fit ml-auto text-primary font-semibold -mt-6">
-          USDC {packageData?.price.toFixed(2)}
-        </p>
+      <div className="bg-white absolute right-0 left-0 top-[22rem] rounded-t-3xl">
+        <ScrollArea className="h-[calc(100vh-22rem)]">
+          <div className="p-4">
+            <p className="w-fit ml-auto text-primary font-semibold">
+              USDC {packageData?.price.toFixed(2)}
+            </p>
 
-        <h4 className="text-xl font-semibold">{packageData?.title}</h4>
-      </div>
+            <h4 className="text-xl font-semibold">{packageData?.title}</h4>
+          </div>
 
-      <div className="flex items-center gap-4 p-4">
-        <div className="w-full bg-muted p-4 rounded-xl space-y-2">
-          <MoneyIcon className="size-6 text-primary" />
-          <p className="text-xs text-muted-foreground">Total Price</p>
-          <p className="font-semibold">USDC {packageData?.price.toFixed(2)}</p>
-        </div>
+          <div className="flex items-center gap-4 p-4">
+            <div className="w-full bg-muted p-4 rounded-xl space-y-2">
+              <MoneyIcon className="size-6 text-primary" />
+              <p className="text-xs text-muted-foreground">Total Price</p>
+              <p className="font-semibold">
+                USDC {packageData?.price.toFixed(2)}
+              </p>
+            </div>
 
-        <div className="w-full bg-muted p-4 rounded-xl space-y-2">
-          <SaveMoneyIcon className="size-6 text-primary" />
-          <p className="text-xs text-muted-foreground">Commissions</p>
-          <p className="font-semibold">
-            USDC {packageData?.commission.toFixed(2)}
-          </p>
-        </div>
-      </div>
+            <div className="w-full bg-muted p-4 rounded-xl space-y-2">
+              <SaveMoneyIcon className="size-6 text-primary" />
+              <p className="text-xs text-muted-foreground">Commissions</p>
+              <p className="font-semibold">
+                USDC {packageData?.commission.toFixed(2)}
+              </p>
+            </div>
+          </div>
 
-      <div className="p-4 flex items-center justify-between">
-        <p className="font-semibold">Rating</p>
-        <div className="flex items-center gap-2">
-          <Rating rating={rating} setRating={setRating} />
-        </div>
-      </div>
+          <div className="p-4 flex items-center justify-between">
+            <p className="font-semibold">Rating</p>
+            <div className="flex items-center gap-2">
+              <Rating rating={rating} setRating={setRating} />
+            </div>
+          </div>
 
-      <div className="p-4">
-        <p className="font-semibold mb-2">Give Comment</p>
-        <Collapsible className="bg-muted rounded-xl">
-          <CollapsibleTrigger className="w-full" onClick={() => setOpen(!open)}>
-            <div className="w-full flex items-center justify-between p-2">
-              <p>Comment Good Reviews</p>
-              <ArrowIcon
-                className={cn(
-                  "size-8 cursor-pointer duration-500",
-                  open ? "rotate-180" : "rotate-0"
-                )}
+          <div className="p-4">
+            <p className="font-semibold mb-2">Give Comment</p>
+            <Collapsible className="bg-muted rounded-xl">
+              <CollapsibleTrigger
+                className="w-full"
                 onClick={() => setOpen(!open)}
-              />
-            </div>
-          </CollapsibleTrigger>
-          <CollapsibleContent className="p-4">
-            <div className={cn("space-y-4", review ? "hidden" : "block")}>
-              {reviews.map((item) => (
-                <div
-                  key={item}
-                  className="text-[0.875rem] p-2 bg-accent hover:bg-accent/50 rounded-xl cursor-pointer"
-                  onClick={() => setReview(item)}
-                >
-                  {item}
+              >
+                <div className="w-full flex items-center justify-between p-2">
+                  <p>Comment Good Reviews</p>
+                  <ArrowIcon
+                    className={cn(
+                      "size-8 cursor-pointer duration-500",
+                      open ? "rotate-180" : "rotate-0"
+                    )}
+                    onClick={() => setOpen(!open)}
+                  />
                 </div>
-              ))}
-            </div>
+              </CollapsibleTrigger>
+              <CollapsibleContent className="p-4">
+                <div className={cn("space-y-4", review ? "hidden" : "block")}>
+                  {reviews.map((item) => (
+                    <div
+                      key={item}
+                      className="text-[0.875rem] p-2 bg-accent hover:bg-accent/50 rounded-xl cursor-pointer"
+                      onClick={() => setReview(item)}
+                    >
+                      {item}
+                    </div>
+                  ))}
+                </div>
 
-            <div
-              className={cn(
-                "text-[0.875rem] p-2 bg-accent hover:bg-accent/50 rounded-xl cursor-pointer",
-                review ? "block" : "hidden"
-              )}
+                <div
+                  className={cn(
+                    "text-[0.875rem] p-2 bg-accent hover:bg-accent/50 rounded-xl cursor-pointer",
+                    review ? "block" : "hidden"
+                  )}
+                >
+                  {review}
+                </div>
+              </CollapsibleContent>
+            </Collapsible>
+          </div>
+
+          <div className="p-4">
+            <Button
+              className="w-full"
+              onClick={handleSubmit}
+              disabled={!review || !rating || isMakingDealLoading}
             >
-              {review}
-            </div>
-          </CollapsibleContent>
-        </Collapsible>
-      </div>
-
-      <div className="p-4">
-        <Button
-          className="w-full"
-          onClick={handleSubmit}
-          disabled={!review || !rating || isMakingDealLoading}
-        >
-          Submit
-        </Button>
+              Submit
+            </Button>
+          </div>
+        </ScrollArea>
       </div>
     </section>
   );

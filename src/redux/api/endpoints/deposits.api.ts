@@ -9,7 +9,7 @@ export const depositsApi = baseApi.injectEndpoints({
         credentials: "include",
         body: data,
       }),
-      invalidatesTags: ["deposits"],
+      invalidatesTags: ["deposits", "my-info"],
     }),
 
     depositsRecords: build.query({

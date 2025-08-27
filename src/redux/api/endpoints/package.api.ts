@@ -17,6 +17,7 @@ export const packagesApi = baseApi.injectEndpoints({
         method: "GET",
         credentials: "include",
       }),
+      keepUnusedDataFor: 0,
       providesTags: ["packages"],
     }),
   }),

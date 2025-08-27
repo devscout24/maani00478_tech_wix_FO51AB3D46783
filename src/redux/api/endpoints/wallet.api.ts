@@ -9,7 +9,7 @@ export const walletApi = baseApi.injectEndpoints({
         credentials: "include",
         body: data,
       }),
-      invalidatesTags: ["wallet"],
+      invalidatesTags: ["wallet", "my-info"],
     }),
 
     getWalletInfo: build.query({

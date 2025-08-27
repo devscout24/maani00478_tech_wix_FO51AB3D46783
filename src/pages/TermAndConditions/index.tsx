@@ -8,14 +8,14 @@ export default function TermAndConditions() {
     "All journey tasks must be completed before withdrawing or resetting your account.",
     "Only one account can be registered per phone number.",
     "Please don't re-bind the same wallet address to different account to reserve journey. We will freeze the following accounts if found.",
-    "Please don't share your account password and withdrawal password to anyone. Our platform will not be held responsible for any losses caused.",
+    "Please don't share your account password and withdrawal password to anyone. Our platform will not be held responsible for any losses caused.",
     "Legal action will be taken in the event of inappropriate use of the account.",
     "Kindly confirm the recharge address with customer service before transferring funds.",
     "If the deposit is made to the wrong deposit address, the platform will not take any responsibility.",
-    "A balance of less than 100 USDT is not allowed to start journey tasks, members should ensure that they have a balance of 100 USDT before starting a journey tasks.",
-    "Platform minimum recharge is 10 USDT, any amount less than 10 USDT will not be verified.",
+    "A balance of less than 100 USDC is not allowed to start journey tasks, members should ensure that they have a balance of 100 USDC before starting a journey tasks.",
+    "Platform minimum recharge is 10 USDC, any amount less than 10 USDC will not be verified.",
     "Once member has started a journey tasks, it must be completed within 7 day, if not possible within 7 day, please inform customer service as soon as possible.",
-    "Bank withdraw is only available for Expert member or above.",
+    "Bank withdraw is only available for Gold member or above.",
   ];
 
   return (

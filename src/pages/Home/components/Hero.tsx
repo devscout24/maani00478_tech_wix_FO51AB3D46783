@@ -37,6 +37,12 @@ export function Hero() {
 
   const currentUserData: TUserInfo = myInfo?.data;
 
+  const currentLevel: TCommissionLevel | undefined = levels?.data.find(
+    (level: TCommissionLevel) => level.id === currentUserData?.level_id
+  )?.normal_commission;
+
+  console.log("currentLevel", currentLevel);
+
   const LevelBadge = () => (
     <div className="w-fit text-xs text-green-600 border border-green-600 px-2.5 py-1 rounded-full absolute right-0">
       Current
@@ -82,9 +88,7 @@ export function Hero() {
           <div className="flex items-center justify-between">
             <Header
               levelId={currentUserData?.level_id as number}
-              dealCompletionPercentage={
-                currentUserData?.targetDealCompletionPercentage as number
-              }
+              dealCompletionPercentage={currentLevel ? Number(currentLevel) : 0}
               level={
                 levels?.data?.find(
                   (level: TCommissionLevel) =>

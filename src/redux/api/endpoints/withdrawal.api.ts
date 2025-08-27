@@ -9,7 +9,7 @@ export const withdrawalApi = baseApi.injectEndpoints({
         credentials: "include",
         body: data,
       }),
-      invalidatesTags: ["withdrawal"],
+      invalidatesTags: ["withdrawal", "my-info"],
     }),
   }),
 });

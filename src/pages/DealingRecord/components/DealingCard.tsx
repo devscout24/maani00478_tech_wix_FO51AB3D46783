@@ -43,10 +43,8 @@ export default function DealingCard({
   // State to track if image failed to load
   const [imageError, setImageError] = useState(false);
 
-  const [
-    acceptHoldDeal,
-    { isLoading: isAcceptingLoading, isSuccess, error: acceptError },
-  ] = useAcceptHoldDealMutation();
+  const [acceptHoldDeal, { isLoading: isAcceptingLoading, isSuccess }] =
+    useAcceptHoldDealMutation();
 
   // Function to handle image loading errors
   const handleImageError = () => {
@@ -55,12 +53,14 @@ export default function DealingCard({
 
   const handleAcceptHoldDeal = async () => {
     try {
-      await acceptHoldDeal(payload?.id).unwrap();
+      const res = await acceptHoldDeal(payload?.id).unwrap();
+      console.log("res", res);
 
       if (isSuccess) {
         toast.success("Deal accepted successfully.");
       }
-    } catch {
+    } catch (error) {
+      const acceptError = error as { data?: { message: string } };
       toast.error(
         acceptError && "data" in acceptError
           ? (acceptError.data as { message: string }).message
@@ -165,11 +165,11 @@ export default function DealingCard({
         </CardContent>
         {status === "on_hold" && (
           <Button
-            className="w-full"
+            className="w-full rounded-none"
             onClick={handleAcceptHoldDeal}
             disabled={isAcceptingLoading}
           >
-            Accept Hold Deal
+            Submit
           </Button>
         )}
       </Card>

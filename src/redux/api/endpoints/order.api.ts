@@ -9,7 +9,7 @@ export const orderApi = baseApi.injectEndpoints({
         credentials: "include",
         body: data,
       }),
-      invalidatesTags: ["order", "packages"],
+      invalidatesTags: ["order", "packages", "my-info"],
     }),
 
     dealRecords: build.query({
@@ -28,7 +28,7 @@ export const orderApi = baseApi.injectEndpoints({
         credentials: "include",
         body: { deal_id: dealId },
       }),
-      invalidatesTags: ["order"],
+      invalidatesTags: ["order", "my-info"],
     }),
   }),
 });
