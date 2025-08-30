@@ -71,7 +71,11 @@ export default function Signup() {
       navigate("/auth");
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      toast.error("Login Failed.", error.message);
+      const signupError =
+        error && "data" in error
+          ? (error.data as { message: string })
+          : undefined;
+      toast.error(signupError?.message || "Something went wrong.");
     }
   }
 

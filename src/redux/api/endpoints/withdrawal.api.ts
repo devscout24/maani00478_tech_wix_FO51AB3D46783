@@ -11,7 +11,17 @@ export const withdrawalApi = baseApi.injectEndpoints({
       }),
       invalidatesTags: ["withdrawal", "my-info"],
     }),
+
+    withdrawalRecords: build.query({
+      query: () => ({
+        url: "/withdrawal-records",
+        method: "GET",
+        credentials: "include",
+      }),
+      providesTags: ["withdrawal"],
+    }),
   }),
 });
 
-export const { useWithdrawalRequestMutation } = withdrawalApi;
+export const { useWithdrawalRequestMutation, useWithdrawalRecordsQuery } =
+  withdrawalApi;

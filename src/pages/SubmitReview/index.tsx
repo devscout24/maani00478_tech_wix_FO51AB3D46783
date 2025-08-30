@@ -32,6 +32,11 @@ export default function SubmitReview() {
   const [open, setOpen] = useState<boolean>(false);
   const [review, setReview] = useState<string | null>(null);
   const [rating, setRating] = useState<number>(0);
+  const [imageError, setImageError] = useState(false);
+
+  const handleImageError = () => {
+    setImageError(true);
+  };
 
   const reviews = [
     "This package covered everything from flights to hotel and even daily tours, such a stress-free way to travel!",
@@ -50,7 +55,10 @@ export default function SubmitReview() {
     useReserveJourneyPackageQuery({});
   const packageData: TPackage = data?.data;
   const packageError =
-    error && "data" in error ? (error.data as { message: string }) : undefined;
+    error && "data" in error
+      ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        (error.data as { message: string; data: any })
+      : undefined;
 
   const [
     makeDeal,
@@ -68,7 +76,15 @@ export default function SubmitReview() {
   if (isError) {
     return (
       <div className="h-screen w-full flex flex-col justify-center items-center">
-        <img src={assets.image.Oops} alt="Oops" className="w-28" />
+        {packageError?.data?.success_image === "congrats" ? (
+          <img
+            src={assets.image.CongratulationIcon}
+            alt="Oops"
+            className="w-28"
+          />
+        ) : (
+          <img src={assets.image.Oops} alt="Oops" className="w-28" />
+        )}
         <p className="font-semibold">{packageError?.message}</p>
         <Button className="mt-4" onClick={() => window.history.back()}>
           Back to Previous
@@ -119,9 +135,14 @@ export default function SubmitReview() {
       >
         <div className="h-[30rem]">
           <img
-            src={packageData?.image}
+            src={
+              imageError || !packageData?.image
+                ? assets.image.Default
+                : packageData?.image
+            }
             alt="banner"
             className="w-full h-full bg-center bg-cover"
+            onError={handleImageError}
           />
         </div>
         <div className="p-4 text-white absolute">

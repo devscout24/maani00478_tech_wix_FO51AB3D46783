@@ -22,6 +22,7 @@ import AustraliaImage from "./images/bdac0b11-41c3-4ebd-92f7-49ab7718d6be.png";
 import MadridImage from "./images/dfa41cab-5cef-4b83-aba1-cc6e9114ced9.png";
 import AvatarPlaceholder from "./images/Profile_avatar_placeholder_large.png";
 import UnionImage from "./images/Union.png";
+import CongratulationIcon from "./images/congratulation_5511415.png";
 
 const assets = {
   image: {
@@ -49,6 +50,7 @@ const assets = {
     MadridImage,
     AvatarPlaceholder,
     UnionImage,
+    CongratulationIcon,
   },
 };
 

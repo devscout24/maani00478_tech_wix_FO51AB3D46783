@@ -1,4 +1,5 @@
 import ArrowLeftIcon from "@/assets/icons/arrow-left-02-solid-rounded 1.svg?react";
+import TransactionIcon from "@/assets/icons/transaction-history-stroke-standard 1.svg?react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -23,14 +24,12 @@ export default function Withdrawal() {
       withdrawPasswordRef.current.value
     ) {
       try {
-        await makeDeal({
+        const res = await makeDeal({
           amount,
           withdrawal_password: withdrawPasswordRef.current.value,
         }).unwrap();
 
-        if (isSuccess) {
-          toast.success("Withdrawal successful.");
-        }
+        toast.success(res.message);
       } catch (error) {
         toast.error(
           (error as { data?: { message?: string } })?.data?.message ||
@@ -40,6 +39,12 @@ export default function Withdrawal() {
     } else {
       toast.error("Please fill all the fields.");
     }
+  };
+
+  // Handle input change
+  const handleAmountChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = parseFloat(e.target.value) || 0;
+    setAmount(value);
   };
 
   return (
@@ -53,9 +58,13 @@ export default function Withdrawal() {
         >
           <ArrowLeftIcon className="size-6 duration-500 group-hover:scale-125 group-hover:text-primary" />
         </Button>
-        <h4 className="w-full text-[.8rem] font-semibold text-center -ml-10">
+        <h4 className="w-full text-[.8rem] font-semibold text-center">
           Withdrawal
         </h4>
+        <TransactionIcon
+          className="size-8"
+          onClick={() => navigate("/withdrawal-history")}
+        />
       </div>
 
       <BalanceCard />
@@ -66,7 +75,9 @@ export default function Withdrawal() {
         <Label className="font-semibold">Withdrawal Amount</Label>
         <Input
           placeholder="USDC 0.00"
-          defaultValue={amount !== 0 ? amount : undefined}
+          value={amount > 0 ? amount.toString() : ""}
+          onChange={handleAmountChange}
+          type="number"
         />
       </div>
 
