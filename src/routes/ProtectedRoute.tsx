@@ -9,9 +9,17 @@ export default function ProtectedRoute({
 }) {
   const currentUser = useCurrentUser();
 
-  const { data: myInfo } = useMyInfoQuery({});
+  const { data: myInfo, isLoading } = useMyInfoQuery({});
 
-  if (!currentUser || myInfo?.data?.status === "inactive") {
+  if (isLoading) {
+    return (
+      <div className="h-screen w-full flex justify-center items-center">
+        <div className="loader"></div>
+      </div>
+    );
+  }
+
+  if (!currentUser || !myInfo) {
     return <Navigate to="/auth" replace={true} />;
   }
 

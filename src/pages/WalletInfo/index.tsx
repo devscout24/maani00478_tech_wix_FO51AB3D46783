@@ -4,7 +4,11 @@ import Logo from "@/assets/svgs/logo.svg?react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { useStoreWalletInfoMutation } from "@/redux/api/endpoints/wallet.api";
+import { Skeleton } from "@/components/ui/skeleton";
+import {
+  useGetWalletInfoQuery,
+  useStoreWalletInfoMutation,
+} from "@/redux/api/endpoints/wallet.api";
 import z from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -17,6 +21,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { toast } from "sonner";
+import { useEffect } from "react";
 
 const formSchema = z.object({
   name: z.string().min(2).max(50),
@@ -29,6 +34,13 @@ const formSchema = z.object({
 export default function WalletInfo() {
   const navigate = useNavigate();
   const [storeWalletInfo, { isLoading }] = useStoreWalletInfoMutation();
+  const {
+    data: walletInfo,
+    isLoading: walletInfoLoading,
+    isFetching: walletInfoFetching,
+  } = useGetWalletInfoQuery({});
+
+  console.log("walletInfo", walletInfo);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -41,6 +53,17 @@ export default function WalletInfo() {
     },
   });
 
+  // Set form values when walletInfo data is available
+  useEffect(() => {
+    if (walletInfo?.data) {
+      form.setValue("name", walletInfo.data.name || "");
+      form.setValue("receipt_address", walletInfo.data.receipt_address || "");
+      form.setValue("cryptocurrency", walletInfo.data.cryptocurrency || "");
+      form.setValue("network", walletInfo.data.network || "");
+      form.setValue("phone", walletInfo.data.phone || "");
+    }
+  }, [walletInfo, form]);
+
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
       const res = await storeWalletInfo(values).unwrap();
@@ -50,6 +73,10 @@ export default function WalletInfo() {
       toast.error(error?.data?.message);
     }
   }
+
+  const hasWalletData =
+    walletInfo?.data && Object.keys(walletInfo.data).length > 0;
+  const isLoadingData = walletInfoFetching || walletInfoLoading;
 
   return (
     <section className="p-4 space-y-4">
@@ -84,7 +111,15 @@ export default function WalletInfo() {
               <FormItem>
                 <FormLabel>Full Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="Full Name" {...field} />
+                  {isLoadingData ? (
+                    <Skeleton className="h-10 w-full" />
+                  ) : (
+                    <Input
+                      placeholder="Full Name"
+                      {...field}
+                      disabled={hasWalletData}
+                    />
+                  )}
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -98,7 +133,15 @@ export default function WalletInfo() {
               <FormItem>
                 <FormLabel>Wallet Address</FormLabel>
                 <FormControl>
-                  <Input placeholder="Wallet Address" {...field} />
+                  {isLoadingData ? (
+                    <Skeleton className="h-10 w-full" />
+                  ) : (
+                    <Input
+                      placeholder="Wallet Address"
+                      {...field}
+                      disabled={hasWalletData}
+                    />
+                  )}
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -112,7 +155,15 @@ export default function WalletInfo() {
               <FormItem>
                 <FormLabel>Phone Number</FormLabel>
                 <FormControl>
-                  <Input placeholder="Phone Number" {...field} />
+                  {isLoadingData ? (
+                    <Skeleton className="h-10 w-full" />
+                  ) : (
+                    <Input
+                      placeholder="Phone Number"
+                      {...field}
+                      disabled={hasWalletData}
+                    />
+                  )}
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -126,36 +177,58 @@ export default function WalletInfo() {
               <FormItem className="space-y-3">
                 <FormLabel>Currency</FormLabel>
                 <FormControl>
-                  <RadioGroup
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                    className="flex justify-between items-center"
-                  >
-                    <FormItem className="flex items-center gap-3">
-                      <FormControl>
-                        <RadioGroupItem value="USDT" />
-                      </FormControl>
-                      <FormLabel className="font-normal">USDT</FormLabel>
-                    </FormItem>
-                    <FormItem className="flex items-center gap-3">
-                      <FormControl>
-                        <RadioGroupItem value="USDC" />
-                      </FormControl>
-                      <FormLabel className="font-normal">USDC</FormLabel>
-                    </FormItem>
-                    <FormItem className="flex items-center gap-3">
-                      <FormControl>
-                        <RadioGroupItem value="ETH" />
-                      </FormControl>
-                      <FormLabel className="font-normal">ETH</FormLabel>
-                    </FormItem>
-                    <FormItem className="flex items-center gap-3">
-                      <FormControl>
-                        <RadioGroupItem value="BTC" />
-                      </FormControl>
-                      <FormLabel className="font-normal">BTC</FormLabel>
-                    </FormItem>
-                  </RadioGroup>
+                  {isLoadingData ? (
+                    <div className="flex justify-between items-center">
+                      <Skeleton className="h-6 w-16" />
+                      <Skeleton className="h-6 w-16" />
+                      <Skeleton className="h-6 w-16" />
+                      <Skeleton className="h-6 w-16" />
+                    </div>
+                  ) : (
+                    <RadioGroup
+                      onValueChange={field.onChange}
+                      value={field.value}
+                      className="flex justify-between items-center"
+                      disabled={hasWalletData}
+                    >
+                      <FormItem className="flex items-center gap-3">
+                        <FormControl>
+                          <RadioGroupItem
+                            value="USDT"
+                            disabled={hasWalletData}
+                          />
+                        </FormControl>
+                        <FormLabel className="font-normal">USDT</FormLabel>
+                      </FormItem>
+                      <FormItem className="flex items-center gap-3">
+                        <FormControl>
+                          <RadioGroupItem
+                            value="USDC"
+                            disabled={hasWalletData}
+                          />
+                        </FormControl>
+                        <FormLabel className="font-normal">USDC</FormLabel>
+                      </FormItem>
+                      <FormItem className="flex items-center gap-3">
+                        <FormControl>
+                          <RadioGroupItem
+                            value="ETH"
+                            disabled={hasWalletData}
+                          />
+                        </FormControl>
+                        <FormLabel className="font-normal">ETH</FormLabel>
+                      </FormItem>
+                      <FormItem className="flex items-center gap-3">
+                        <FormControl>
+                          <RadioGroupItem
+                            value="BTC"
+                            disabled={hasWalletData}
+                          />
+                        </FormControl>
+                        <FormLabel className="font-normal">BTC</FormLabel>
+                      </FormItem>
+                    </RadioGroup>
+                  )}
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -169,39 +242,65 @@ export default function WalletInfo() {
               <FormItem className="space-y-3">
                 <FormLabel>Network</FormLabel>
                 <FormControl>
-                  <RadioGroup
-                    onValueChange={field.onChange}
-                    defaultValue={field.value}
-                    className="flex justify-between items-center"
-                  >
-                    <FormItem className="flex items-center gap-3">
-                      <FormControl>
-                        <RadioGroupItem value="TRC20" />
-                      </FormControl>
-                      <FormLabel className="font-normal">TRC20</FormLabel>
-                    </FormItem>
-                    <FormItem className="flex items-center gap-3">
-                      <FormControl>
-                        <RadioGroupItem value="ERC20" />
-                      </FormControl>
-                      <FormLabel className="font-normal">ERC20</FormLabel>
-                    </FormItem>
-                    <FormItem className="flex items-center gap-3">
-                      <FormControl>
-                        <RadioGroupItem value="Bitcoin" />
-                      </FormControl>
-                      <FormLabel className="font-normal">Bitcoin</FormLabel>
-                    </FormItem>
-                  </RadioGroup>
+                  {isLoadingData ? (
+                    <div className="flex justify-between items-center">
+                      <Skeleton className="h-6 w-20" />
+                      <Skeleton className="h-6 w-20" />
+                      <Skeleton className="h-6 w-20" />
+                    </div>
+                  ) : (
+                    <RadioGroup
+                      onValueChange={field.onChange}
+                      value={field.value}
+                      className="flex justify-between items-center"
+                      disabled={hasWalletData}
+                    >
+                      <FormItem className="flex items-center gap-3">
+                        <FormControl>
+                          <RadioGroupItem
+                            value="TRC20"
+                            disabled={hasWalletData}
+                          />
+                        </FormControl>
+                        <FormLabel className="font-normal">TRC20</FormLabel>
+                      </FormItem>
+                      <FormItem className="flex items-center gap-3">
+                        <FormControl>
+                          <RadioGroupItem
+                            value="ERC20"
+                            disabled={hasWalletData}
+                          />
+                        </FormControl>
+                        <FormLabel className="font-normal">ERC20</FormLabel>
+                      </FormItem>
+                      <FormItem className="flex items-center gap-3">
+                        <FormControl>
+                          <RadioGroupItem
+                            value="Bitcoin"
+                            disabled={hasWalletData}
+                          />
+                        </FormControl>
+                        <FormLabel className="font-normal">Bitcoin</FormLabel>
+                      </FormItem>
+                    </RadioGroup>
+                  )}
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
 
-          <Button type="submit" className="w-full mt-4" disabled={isLoading}>
-            Add Method
-          </Button>
+          {isLoadingData ? (
+            <Skeleton className="h-10 w-full" />
+          ) : (
+            <Button
+              type="submit"
+              className="w-full mt-4"
+              disabled={isLoading || hasWalletData}
+            >
+              {hasWalletData ? "Wallet Already Added" : "Add Method"}
+            </Button>
+          )}
         </form>
       </Form>
     </section>
