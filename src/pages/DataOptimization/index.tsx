@@ -151,6 +151,7 @@ export default function DataOptimization() {
             <Button
               className="w-full"
               onClick={() => navigate("/submit-review")}
+              disabled={myInfoData?.data?.reserve === 0 ? true : false}
             >
               Reserve Journey
             </Button>
