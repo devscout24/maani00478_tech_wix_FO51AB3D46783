@@ -13,8 +13,8 @@ export const withdrawalApi = baseApi.injectEndpoints({
     }),
 
     withdrawalRecords: build.query({
-      query: () => ({
-        url: "/withdrawal-records",
+      query: (query) => ({
+        url: `/withdrawal-records?status=${query}`,
         method: "GET",
         credentials: "include",
       }),

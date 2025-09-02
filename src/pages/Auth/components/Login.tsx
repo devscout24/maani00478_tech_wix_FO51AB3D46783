@@ -52,7 +52,7 @@ export default function Login() {
         error && "data" in error
           ? (error.data as { message: string })
           : undefined;
-      toast.error(loginError?.message);
+      toast.error(loginError?.message || "Something went wrong.");
     }
   }
 

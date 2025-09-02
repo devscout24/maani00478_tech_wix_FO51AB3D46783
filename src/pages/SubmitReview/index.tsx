@@ -17,6 +17,7 @@ import Rating from "@/components/Rating";
 import { toast } from "sonner";
 import { useMakeDealMutation } from "@/redux/api/endpoints/order.api";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import TravelTickets from "@/components/Animation/TravelTickets";
 
 type TPackage = {
   id: number;
@@ -33,6 +34,7 @@ export default function SubmitReview() {
   const [review, setReview] = useState<string | null>(null);
   const [rating, setRating] = useState<number>(0);
   const [imageError, setImageError] = useState(false);
+  const [isLoadingAnimation, setIsLoadingAnimation] = useState(false);
 
   const handleImageError = () => {
     setImageError(true);
@@ -51,8 +53,7 @@ export default function SubmitReview() {
     "Excellent value for money. I’ll definitely book with this company again for my next vacation.",
   ];
 
-  const { data, error, isLoading, isFetching, isError } =
-    useReserveJourneyPackageQuery({});
+  const { data, error, isLoading, isError } = useReserveJourneyPackageQuery({});
   const packageData: TPackage = data?.data;
   const packageError =
     error && "data" in error
@@ -65,10 +66,18 @@ export default function SubmitReview() {
     { isLoading: isMakingDealLoading, isError: isDealError, error: dealError },
   ] = useMakeDealMutation();
 
-  if (isLoading || isFetching) {
+  if (isLoading) {
     return (
       <div className="h-screen w-full flex justify-center items-center">
         <div className="loader"></div>
+      </div>
+    );
+  }
+
+  if (isLoadingAnimation) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <TravelTickets />
       </div>
     );
   }
@@ -100,6 +109,8 @@ export default function SubmitReview() {
     }
 
     try {
+      setIsLoadingAnimation(true);
+
       const res = await makeDeal({
         package_id: packageData?.id,
         review,
@@ -107,6 +118,7 @@ export default function SubmitReview() {
       }).unwrap();
 
       if (isDealError) {
+        setIsLoadingAnimation(false); // Stop loading if there's an error
         toast.error(
           (res &&
             "data" in res &&
@@ -115,9 +127,15 @@ export default function SubmitReview() {
         );
         return;
       }
-      toast.success(res?.message);
-      navigate("/data-optimization");
+
+      // Wait for 1 minute (60000ms) then stop loading, show success toast and navigate
+      setTimeout(() => {
+        setIsLoadingAnimation(false);
+        toast.success(res?.message);
+        navigate("/data-optimization");
+      }, 6000);
     } catch {
+      setIsLoadingAnimation(false); // Stop loading if there's an error
       toast.error(
         (dealError &&
           "data" in dealError &&
@@ -129,10 +147,7 @@ export default function SubmitReview() {
 
   return (
     <section className="relative">
-      <div
-        // className={`h-[26.5rem] bg-[url('/6325f1608554d61735ca3a8c60436e4b5f7424f11.png')] bg-cover bg-center flex flex-col`}
-        className={`h-[26.5rem] flex flex-col relative`}
-      >
+      <div className={`h-[26.5rem] flex flex-col relative`}>
         <div className="h-[30rem]">
           <img
             src={
