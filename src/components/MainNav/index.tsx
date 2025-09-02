@@ -19,7 +19,7 @@ import InformationIcon from "@/assets/icons/information-circle-solid-rounded 1.s
 import NoteIcon from "@/assets/icons/note-01-solid-standard 1.svg?react";
 import UserGroupIcon from "@/assets/icons/user-group-solid-rounded 1.svg?react";
 import HelpIcon from "@/assets/icons/help-circle-solid-standard 1.svg?react";
-import SecurityCheckIcon from "@/assets/icons/security-check-solid-standard 1.svg?react";
+// import SecurityCheckIcon from "@/assets/icons/security-check-solid-standard 1.svg?react";
 import CustomerIcon from "@/assets/icons/customer-service-01-solid-standard 1.svg?react";
 import LogoutIcon from "@/assets/icons/logout-03-solid-standard 1.svg?react";
 import { Button } from "../ui/button";
@@ -87,11 +87,11 @@ export default function MainNav() {
       title: "FAQs",
       icon: <HelpIcon />,
     },
-    {
-      path: "/security",
-      title: "Security",
-      icon: <SecurityCheckIcon />,
-    },
+    // {
+    //   path: "/security",
+    //   title: "Security",
+    //   icon: <SecurityCheckIcon />,
+    // },
     {
       path: "/customer-service",
       title: "Customer Service",
